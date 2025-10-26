@@ -1,0 +1,32 @@
+{
+  "submission_id": "2c956e40-6adc-40b6-b237-871e39ff3f85",
+  "student_id": "S2O23",
+  "student_name": "Karthik",
+  "student_email": "karthikmsarma@gmail.com",
+  "submission_type": "code",
+  "status": "submitted",
+  "metadata": {
+    "title": "ljlk",
+    "description": null,
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [],
+    "programming_languages": [],
+    "total_files": 1,
+    "total_size": 1690415
+  },
+  "files": [
+    {
+      "file_id": "984e0a78-8406-444b-855c-1389110f7865",
+      "original_name": "A2_S20230030385.pdf",
+      "saved_name": "984e0a78-8406-444b-855c-1389110f7865.pdf",
+      "file_path": "submissions/2c956e40-6adc-40b6-b237-871e39ff3f85/984e0a78-8406-444b-855c-1389110f7865.pdf",
+      "file_size": 1690415,
+      "file_type": "application/pdf",
+      "language": null,
+      "uploaded_at": "2025-10-26T14:59:29.728580"
+    }
+  ],
+  "submitted_at": "2025-10-26T14:59:29.728633",
+  "updated_at": "2025-10-26T14:59:29.728634"
+}

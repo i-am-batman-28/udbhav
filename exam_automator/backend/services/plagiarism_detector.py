@@ -1,6 +1,7 @@
 """
 Plagiarism Detection Service - Simplified Version
 Uses text-based similarity and LLM analysis (NO vector database)
+HTTP API for Groq - NO SDK, NO MUTEX LOCKS!
 """
 
 import os
@@ -11,10 +12,13 @@ from pathlib import Path
 import difflib
 import re
 import json
+import requests
 from datetime import datetime
 
-from groq import Groq
 from dotenv import load_dotenv
+
+# Import intelligent recommendation generator
+from services.intelligent_recommendations import get_recommendation_generator
 
 load_dotenv()
 
@@ -59,15 +63,15 @@ class PlagiarismDetector:
     4. N-gram matching for exact phrase detection
     """
     
-    def __init__(self, openai_api_key: Optional[str] = None, use_vector_db: bool = True):
+    def __init__(self, openai_api_key: Optional[str] = None, use_vector_db: bool = False):
         """
         Initialize plagiarism detector
         
         Args:
             openai_api_key: API key for LLM analysis (uses Groq now, much faster!)
-            use_vector_db: Enable vector DB for cross-submission plagiarism detection
+            use_vector_db: Enable vector DB for cross-submission plagiarism detection (DEFAULT: False to avoid mutex locks)
         """
-        # Enable vector DB for cross-submission checking
+        # Disable vector DB by default to avoid TensorFlow mutex locks
         self.use_vector_db = use_vector_db
         self.vector_manager = None
         
@@ -84,11 +88,12 @@ class PlagiarismDetector:
         # Try Groq first (faster), fallback to OpenAI
         self.groq_api_key = os.getenv('GROQ_API_KEY')
         self.openai_api_key = openai_api_key or os.getenv('OPENAI_API_KEY')
+        self.api_url = "https://api.groq.com/openai/v1/chat/completions"
         
         if self.groq_api_key:
-            self.client = Groq(api_key=self.groq_api_key)
+            self.client = "groq_http"  # Using HTTP API instead of SDK
             self.model = "llama-3.3-70b-versatile"
-            print("✅ Plagiarism detector initialized with Groq (lightning fast!)")
+            print("✅ Plagiarism detector initialized with Groq HTTP API (NO mutex locks!)")
         elif self.openai_api_key:
             from openai import OpenAI
             self.client = OpenAI(api_key=self.openai_api_key)
@@ -106,6 +111,31 @@ class PlagiarismDetector:
             "low_similarity": 0.50,  # 50-70% similarity
             "exact_match": 0.95,  # 95%+ is considered exact
         }
+    
+    def _call_groq_api(self, messages: List[Dict], temperature: float = 0.7) -> Dict:
+        """Make direct HTTP call to Groq API (avoids SDK mutex issues)"""
+        if not self.groq_api_key:
+            raise ValueError("Groq API key not available")
+        
+        headers = {
+            "Authorization": f"Bearer {self.groq_api_key}",
+            "Content-Type": "application/json"
+        }
+        data = {
+            "model": self.model,
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": 2000
+        }
+        
+        response = requests.post(
+            self.api_url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        response.raise_for_status()
+        return response.json()
     
     def calculate_text_similarity(self, text1: str, text2: str) -> float:
         """
@@ -355,17 +385,15 @@ RESPOND IN JSON:
   "proceed_to_deep_analysis": true/false
 }}"""
 
-            triage_response = self.client.chat.completions.create(
-                model=self.model,
+            triage_response = self._call_groq_api(
                 messages=[
                     {"role": "system", "content": "You are a code authenticity expert. Respond ONLY with valid JSON."},
                     {"role": "user", "content": triage_prompt}
                 ],
-                max_tokens=200,
                 temperature=0.2
             )
             
-            triage_text = triage_response.choices[0].message.content.strip()
+            triage_text = triage_response['choices'][0]['message']['content'].strip()
             
             # Try to extract JSON from response
             import json
@@ -631,17 +659,15 @@ RESPOND IN JSON FORMAT:
   "detailed_explanation": "comprehensive 2-3 sentence analysis"
 }}"""
 
-            deep_response = self.client.chat.completions.create(
-                model=self.model,
+            deep_response = self._call_groq_api(
                 messages=[
                     {"role": "system", "content": "You are a forensic content authenticity expert with 15 years experience detecting AI-generated academic submissions across ALL programming languages, markup languages, and natural text. Analyze systematically and provide evidence-based conclusions. RESPOND ONLY IN VALID JSON."},
                     {"role": "user", "content": deep_analysis_prompt}
                 ],
-                max_tokens=1500,
                 temperature=0.1  # Low temperature for consistent analysis
             )
             
-            deep_text = deep_response.choices[0].message.content.strip()
+            deep_text = deep_response['choices'][0]['message']['content'].strip()
             
             # Extract JSON from response
             json_match = re.search(r'\{.*\}', deep_text, re.DOTALL)
@@ -751,17 +777,15 @@ Provide detailed forensic analysis in JSON format:
   "recommendation": "specific action for instructor"
 }}"""
 
-                            response = self.client.chat.completions.create(
-                                model=self.model,
+                            response = self._call_groq_api(
                                 messages=[
                                     {"role": "system", "content": "You are a forensic code analyst detecting internal plagiarism. Provide evidence-based analysis. RESPOND ONLY IN VALID JSON."},
                                     {"role": "user", "content": analysis_prompt}
                                 ],
-                                max_tokens=800,
                                 temperature=0.1
                             )
                             
-                            analysis_text = response.choices[0].message.content.strip()
+                            analysis_text = response['choices'][0]['message']['content'].strip()
                             
                             # Extract JSON
                             import json
@@ -1034,7 +1058,49 @@ Provide detailed forensic analysis in JSON format:
     def _generate_recommendations(self, originality_score: float,
                                  matches: List[SimilarityMatch],
                                  submission_type: str) -> List[str]:
-        """Generate detailed, actionable recommendations based on plagiarism findings"""
+        """Generate intelligent, real-time recommendations based on actual findings using Groq LLM"""
+        
+        # Convert matches to dict format for the recommendation generator
+        matches_dict = []
+        for match in matches:
+            matches_dict.append({
+                'submission_id': match.submission_id,
+                'student_name': match.student_name,
+                'similarity_percentage': match.similarity_percentage,
+                'matching_sections': match.matching_sections,
+                'match_type': match.match_type,
+                'confidence': match.confidence,
+                'flagged': match.flagged
+            })
+        
+        # Get the intelligent recommendation generator
+        try:
+            print(f"[RECOMMENDATIONS] Generating intelligent recommendations for {len(matches)} matches...")
+            rec_generator = get_recommendation_generator()
+            
+            # Generate intelligent recommendations
+            recommendations_text = rec_generator.generate_recommendations(
+                originality_score=originality_score,
+                matches=matches_dict,
+                submission_type=submission_type,
+                student_name="Student"  # Could be passed in from report
+            )
+            
+            print(f"[RECOMMENDATIONS] Successfully generated intelligent recommendations!")
+            # Return as list with single formatted string
+            return [recommendations_text]
+            
+        except Exception as e:
+            import traceback
+            print(f"[ERROR] Failed to generate intelligent recommendations: {e}")
+            print(traceback.format_exc())
+            # Fallback to basic recommendations
+            return self._generate_basic_recommendations(originality_score, matches, submission_type)
+    
+    def _generate_basic_recommendations(self, originality_score: float,
+                                       matches: List[SimilarityMatch],
+                                       submission_type: str) -> List[str]:
+        """Fallback: Generate basic recommendations if intelligent generation fails"""
         recommendations = []
         
         # Categorize matches by type
@@ -1045,13 +1111,13 @@ Provide detailed forensic analysis in JSON format:
         
         # Overall assessment
         if originality_score >= 90:
-            recommendations.append("✅ **Excellent Originality**: Content demonstrates strong original work with minimal issues.")
+            recommendations.append("**ASSESSMENT: EXCELLENT ORIGINALITY** - Content demonstrates strong original work with minimal integrity concerns.")
         elif originality_score >= 70:
-            recommendations.append("⚠️ **Minor Concerns**: Some similarities detected that warrant review.")
+            recommendations.append("**ASSESSMENT: MINOR CONCERNS** - Some similarities detected that warrant further review.")
         elif originality_score >= 50:
-            recommendations.append("🚨 **Moderate Risk**: Significant similarities found. Manual review required.")
+            recommendations.append("**ASSESSMENT: MODERATE RISK** - Significant similarities found. Manual review and student interview required.")
         else:
-            recommendations.append("� **High Risk**: Substantial plagiarism indicators. Immediate investigation needed.")
+            recommendations.append("� **ASSESSMENT: HIGH RISK** - Substantial plagiarism indicators detected. Immediate investigation recommended.")
         
         # AI-Generated Code Analysis
         if ai_generated:
@@ -1059,7 +1125,7 @@ Provide detailed forensic analysis in JSON format:
             if high_confidence_ai:
                 file_names = [m.submission_id for m in high_confidence_ai[:3]]
                 recommendations.append(
-                    f"\n**🤖 AI-Generated Content** ({len(high_confidence_ai)} high-confidence detections):\n"
+                    f"\n**AI-GENERATED CONTENT DETECTED** ({len(high_confidence_ai)} high-confidence detections):\n"
                     f"   • Review files: {', '.join(file_names)}\n"
                     f"   • Evidence includes: Over-commenting, perfect formatting, generic naming patterns\n"
                     f"   • **Action**: Interview student about code development process\n"
@@ -1067,7 +1133,7 @@ Provide detailed forensic analysis in JSON format:
                 )
             else:
                 recommendations.append(
-                    f"\n**🤖 Possible AI Assistance** ({len(ai_generated)} low-confidence detections):\n"
+                    f"\n**POSSIBLE AI ASSISTANCE** ({len(ai_generated)} low-confidence detections):\n"
                     f"   • Some AI patterns detected but could be coincidental\n"
                     f"   • May indicate use of AI suggestions or autocompletion\n"
                     f"   • **Action**: Discuss acceptable AI tool usage policies with student"
@@ -1078,7 +1144,7 @@ Provide detailed forensic analysis in JSON format:
             high_similarity = [m for m in internal_copies if m.similarity_percentage >= 80]
             if high_similarity:
                 recommendations.append(
-                    f"\n**📁 Internal File Duplication** ({len(high_similarity)} high-similarity matches):\n"
+                    f"\n**INTERNAL FILE DUPLICATION** ({len(high_similarity)} high-similarity matches):\n"
                     f"   • Files contain nearly identical code blocks\n"
                     f"   • This may indicate: Copy-paste programming, code generation, or shared templates\n"
                     f"   • **Action**: Check for proper refactoring (should use functions/modules instead)\n"
@@ -1086,7 +1152,7 @@ Provide detailed forensic analysis in JSON format:
                 )
             else:
                 recommendations.append(
-                    f"\n**📁 Code Similarity Detected** ({len(internal_copies)} moderate matches):\n"
+                    f"\n**CODE SIMILARITY DETECTED** ({len(internal_copies)} moderate matches):\n"
                     f"   • Some code blocks share similar structure\n"
                     f"   • Could be legitimate shared utilities or templates\n"
                     f"   • **Action**: Review if code reuse is appropriate for the assignment"
@@ -1095,7 +1161,7 @@ Provide detailed forensic analysis in JSON format:
         # Exact Matches
         if exact_matches:
             recommendations.append(
-                f"\n**⚠️ Exact/Near-Exact Matches** ({len(exact_matches)} found):\n"
+                f"\n**EXACT/NEAR-EXACT MATCHES FOUND** ({len(exact_matches)} found):\n"
                 f"   • Verbatim or nearly verbatim content detected\n"
                 f"   • **Action**: Verify proper quotations and citations\n"
                 f"   • **Action**: Check if content is allowed reference material"
@@ -1104,7 +1170,7 @@ Provide detailed forensic analysis in JSON format:
         # Paraphrased Content
         if paraphrased:
             recommendations.append(
-                f"\n**📝 Paraphrasing Patterns** ({len(paraphrased)} instances):\n"
+                f"\n**PARAPHRASING PATTERNS DETECTED** ({len(paraphrased)} instances):\n"
                 f"   • Content shows structural similarity to sources\n"
                 f"   • **Action**: Ensure proper attribution of ideas\n"
                 f"   • **Action**: Verify paraphrasing is substantial, not just synonym substitution"
@@ -1113,7 +1179,7 @@ Provide detailed forensic analysis in JSON format:
         # Type-specific best practices
         if submission_type == "code":
             recommendations.append(
-                "\n**💻 Code Submission Guidelines**:\n"
+                "\n**CODE SUBMISSION BEST PRACTICES**:\n"
                 "   • Similar algorithms are acceptable if independently implemented\n"
                 "   • Code should show understanding through comments and variable names\n"
                 "   • Avoid copying implementation details from online sources\n"
@@ -1121,7 +1187,7 @@ Provide detailed forensic analysis in JSON format:
             )
         else:
             recommendations.append(
-                "\n**📚 Written Work Guidelines**:\n"
+                "\n**WRITTEN WORK BEST PRACTICES**:\n"
                 "   • Use quotation marks for direct quotes\n"
                 "   • Cite all sources following required format\n"
                 "   • Paraphrase substantially, don't just rearrange words\n"
@@ -1131,7 +1197,7 @@ Provide detailed forensic analysis in JSON format:
         # Next steps based on risk level
         if originality_score < 70:
             recommendations.append(
-                "\n**🎯 Recommended Next Steps**:\n"
+                "\n**RECOMMENDED NEXT STEPS**:\n"
                 "   1. Schedule meeting with student to discuss findings\n"
                 "   2. Request original drafts, notes, or development history\n"
                 "   3. Ask student to explain key concepts/code sections\n"

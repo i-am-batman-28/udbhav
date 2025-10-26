@@ -1,0 +1,21 @@
+{
+  "plagiarism": {
+    "success": true,
+    "overall_originality_score": 100.0,
+    "total_matches_found": 0,
+    "similarity_matches": [],
+    "flagged_sections": [],
+    "risk_level": "low",
+    "recommendations": [
+      "EXCELLENT ORIGINALITY: The plagiarism detection results indicate that the submission has an originality score of 100.0%, with no significant similarity matches detected.",
+      "This suggests that the student's work is entirely original and does not contain any plagiarized content.",
+      "The plagiarism detection results do not reveal any significant findings, as there are no matches detected.",
+      "The categories to consider in this context would typically include: - AI-Generated: No findings - Internal Duplication: No findings - Exact Matches: No findings, as indicated by the 0 total matches - Paraphrasing: No findings Given the absence of any matches, there are no specific examples to cite, and confidence levels and severity are not applicable in this case.",
+      "Review the student's submission to ensure it meets the assignment's requirements and grading criteria.",
+      "Consider providing feedback to the student on their work, focusing on content, structure, and any areas for improvement.",
+      "Document the plagiarism detection results and the assessment of the student's work for future reference.",
+      "Clear Assignment Guidelines: Ensure that assignment guidelines are clear and concise, reducing the likelihood of misunderstandings that could lead to plagiarism."
+    ],
+    "sources_checked": 1
+  }
+}

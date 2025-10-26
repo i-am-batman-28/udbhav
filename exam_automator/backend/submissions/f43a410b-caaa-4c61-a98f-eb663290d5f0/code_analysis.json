@@ -1,0 +1,15 @@
+{
+  "submission_id": "f43a410b-caaa-4c61-a98f-eb663290d5f0",
+  "total_files_analyzed": 1,
+  "files_with_errors": 0,
+  "average_overall_score": 0,
+  "file_reports": [
+    {
+      "file_name": "S20240030348_Q3_A6.c",
+      "file_id": "63bb1ded-e61c-45cd-ba5c-9c57e4383774",
+      "language": "c",
+      "message": "Analysis not yet supported for c. Coming soon!"
+    }
+  ],
+  "analysis_timestamp": "2025-10-26T12:13:12.021357"
+}

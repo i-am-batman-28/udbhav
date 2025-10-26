@@ -1,0 +1,8 @@
+{
+  "ai_detector": {
+    "is_ai_generated": true,
+    "confidence": 90.0,
+    "confidence_level": "unknown",
+    "explanation": "High confidence determination from initial analysis"
+  }
+}

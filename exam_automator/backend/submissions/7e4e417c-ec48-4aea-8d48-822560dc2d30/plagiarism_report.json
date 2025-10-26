@@ -1,0 +1,38 @@
+{
+  "submission_id": "7e4e417c-ec48-4aea-8d48-822560dc2d30",
+  "student_name": "Karthik",
+  "submission_type": "code",
+  "overall_originality_score": 10.0,
+  "total_matches_found": 1,
+  "similarity_matches": [
+    {
+      "submission_id": "ai_generated",
+      "student_name": "AI Tool (ChatGPT/Copilot/Claude)",
+      "similarity_percentage": 90.0,
+      "matching_sections": [
+        {
+          "source_text": "Quick triage: ai_generated",
+          "target_text": "AI pattern detected",
+          "similarity": "0.9"
+        }
+      ],
+      "match_type": "ai_generated",
+      "confidence": 0.9,
+      "flagged": true
+    }
+  ],
+  "flagged_sections": [
+    {
+      "source_submission": "AI_Tool",
+      "text": "High confidence determination from initial analysis",
+      "similarity": 90.0,
+      "type": "ai_generated"
+    }
+  ],
+  "risk_level": "critical",
+  "recommendations": [
+    "### ASSESSMENT\nThe originality score of 10.0% indicates a CRITICAL level of concern regarding the academic integrity of the submission. The presence of AI-generated content with a high confidence level suggests that a significant portion of the work may not be the student's own.\n\n### DETAILED FINDINGS\nThe plagiarism detection results reveal the following:\n- **AI-Generated Content**: The detection of AI-generated content with a confidence level of 90.0% in the file \"ai_generated\" suggests that a substantial part of the code may have been generated using artificial intelligence tools. This is a serious concern as it may indicate that the student did not complete the work independently. The sample provided, although not specified, would be crucial in determining the extent of the AI-generated content.\n\n### REQUIRED ACTIONS\n1. **Review the Sample**: Examine the sample from the \"ai_generated\" file to understand the nature and extent of the AI-generated content.\n2. **Interview the Student**: Discuss the findings with the student to clarify the role of AI tools in generating the code and to assess their understanding of academic integrity policies.\n3. **Assess Independent Implementation**: Determine if the AI-generated content could be a result of independently implemented algorithms or if it was directly copied from an external source.\n4. **Consider Re-submission**: Depending on the outcome of the review and interview, consider allowing the student to re-submit the assignment, ensuring that the work is entirely their own and properly cited.\n\n### BEST PRACTICES\n1. **Clear Guidelines**: Provide clear guidelines on the acceptable use of AI tools in coding assignments, emphasizing the importance of original work and proper citation.\n2. **Education on Academic Integrity**: Offer resources or workshops to educate students on what constitutes plagiarism, especially in the context of coding and AI-generated content.\n3. **Regular Feedback**: Regularly review and provide feedback on assignments to detect and address any potential issues early on.\n4. **Transparent Policies**: Ensure that academic integrity policies are transparent, accessible, and communicated to all students, outlining the consequences of plagiarism and the process for addressing violations.\n\n### RECOMMENDED NEXT STEPS\nGiven the critical nature of the originality score, the following 5-step action plan is recommended:\n1. **Immediate Review**: Conduct an immediate and thorough review of the submission to understand the extent of the AI-generated content.\n2. **Student Notification**: Notify the student of the findings and schedule a meeting to discuss the implications and the next steps.\n3. **Investigation**: Investigate the matter further, considering the student's explanation and any evidence of independent work or improper use of AI tools.\n4. **Decision on Academic Integrity**: Based on the investigation, decide whether an academic integrity violation has occurred and determine the appropriate action, which could range from a warning to more severe penalties.\n5. **Documentation and Follow-Up**: Document all steps taken during the investigation and the decision made. Follow up with the student to ensure understanding of the decision and to provide support in maintaining academic integrity in future submissions."
+  ],
+  "analysis_timestamp": "2025-10-26T15:42:28.084469",
+  "sources_checked": 1
+}

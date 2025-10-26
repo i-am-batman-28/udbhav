@@ -36,27 +36,31 @@ import {
 } from '@mui/icons-material';
 
 import { apiService, type StudentDashboard } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 const HistoryPageNew: React.FC = () => {
+  const { user } = useAuth();
   const [dashboard, setDashboard] = useState<StudentDashboard | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [studentId, setStudentId] = useState('test-student-001'); // Default for testing
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    // Try to get student ID from localStorage
-    const savedStudentId = localStorage.getItem('studentId') || 'test-student-001';
-    setStudentId(savedStudentId);
-    fetchDashboard(savedStudentId);
-  }, []);
+    // Use the logged-in user's student ID
+    if (user?.student_id) {
+      fetchDashboard(user.student_id);
+    } else {
+      setLoading(false);
+      setError('Please log in to view your submissions');
+    }
+  }, [user]);
 
   const fetchDashboard = async (id: string) => {
     try {
       setLoading(true);
+      setError(null);
       const data = await apiService.getStudentDashboard(id);
       setDashboard(data);
-      localStorage.setItem('studentId', id);
     } catch (err: any) {
       setError(err.response?.data?.detail || err.message || 'Failed to fetch dashboard');
     } finally {
@@ -71,10 +75,12 @@ const HistoryPageNew: React.FC = () => {
   const getStatusChip = (status: string) => {
     if (status === 'completed') {
       return <Chip icon={<CheckCircle />} label="Completed" color="success" size="small" />;
-    } else if (status === 'under_review') {
+    } else if (status === 'under_review' || status === 'processing') {
       return <Chip icon={<Schedule />} label="Under Review" color="warning" size="small" />;
     } else if (status === 'flagged') {
       return <Chip icon={<Error />} label="Flagged" color="error" size="small" />;
+    } else if (status === 'submitted') {
+      return <Chip icon={<CheckCircle />} label="Submitted" color="info" size="small" />;
     } else {
       return <Chip icon={<Schedule />} label="Pending" color="default" size="small" />;
     }
@@ -86,10 +92,14 @@ const HistoryPageNew: React.FC = () => {
     return <Code fontSize="small" />;
   };
 
-  const filteredSubmissions = dashboard?.recent_submissions?.filter((sub) =>
-    sub.metadata.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    sub.student_name.toLowerCase().includes(searchTerm.toLowerCase())
-  ) || [];
+  const filteredSubmissions = dashboard?.recent_submissions?.filter((sub) => {
+    if (!searchTerm) return true;
+    const searchLower = searchTerm.toLowerCase();
+    const title = sub.metadata?.title?.toLowerCase() || '';
+    const name = sub.student_name?.toLowerCase() || '';
+    const filename = sub.files?.[0]?.original_name?.toLowerCase() || '';
+    return title.includes(searchLower) || name.includes(searchLower) || filename.includes(searchLower);
+  }) || [];
 
   if (loading) {
     return (
@@ -108,9 +118,11 @@ const HistoryPageNew: React.FC = () => {
         <Alert
           severity="error"
           action={
-            <Button onClick={() => fetchDashboard(studentId)} color="inherit" size="small">
-              Retry
-            </Button>
+            user?.student_id && (
+              <Button onClick={() => user.student_id && fetchDashboard(user.student_id)} color="inherit" size="small">
+                Retry
+              </Button>
+            )
           }
         >
           {error || 'Failed to load dashboard'}
@@ -133,7 +145,7 @@ const HistoryPageNew: React.FC = () => {
         </Box>
         <Box>
           <Tooltip title="Refresh">
-            <IconButton onClick={() => fetchDashboard(studentId)} color="primary">
+            <IconButton onClick={() => user?.student_id && fetchDashboard(user.student_id)} color="primary">
               <Refresh />
             </IconButton>
           </Tooltip>

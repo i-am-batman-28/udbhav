@@ -1,0 +1,7 @@
+{
+  "humanizer": {
+    "success": false,
+    "error": "429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions",
+    "original": "/**\n * Binary Search Algorithm\n * Searches for a target value within a sorted array.\n * Returns the index if found, otherwise returns -1.\n * \n * @param {number[]} array - Sorted array (ascending order)\n * @param {number} target - Element to search for\n * @returns {number}\n */\nfunction binarySearch(array, target) {\n    let left = 0;\n    let right = array.length - 1;\n\n    while (left <= right) {\n        const middle = Math.floor((left + right) / 2);\n        const value = array[middle];\n\n        if (value === target) return middle;\n        if (value < target) left = middle + 1;\n        else right = middle - 1;\n    }\n\n    return -1;\n}\n\n// Example usage\nconst arr = [1, 4, 7, 9, 13, 18];\nconsole.log(binarySearch(arr, 9));   // Output: 3\nconsole.log(binarySearch(arr, 10));  // Output: -1\n"
+  }
+}

@@ -254,13 +254,15 @@ const ResultsPageNew: React.FC = () => {
                   <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
                     <Typography><strong>{fileReport.file_name}</strong></Typography>
                     <Box sx={{ display: 'flex', gap: 1, mr: 2 }}>
+                      {fileReport.quality_score?.grade && (
+                        <Chip
+                          label={`Grade: ${fileReport.quality_score.grade}`}
+                          color={getGradeColor(fileReport.quality_score.grade)}
+                          size="small"
+                        />
+                      )}
                       <Chip
-                        label={`Grade: ${fileReport.quality_score.grade}`}
-                        color={getGradeColor(fileReport.quality_score.grade)}
-                        size="small"
-                      />
-                      <Chip
-                        label={`${fileReport.overall_score.toFixed(1)}/100`}
+                        label={`${fileReport.overall_score?.toFixed(1) || 0}/100`}
                         color="primary"
                         variant="outlined"
                         size="small"
@@ -279,19 +281,22 @@ const ResultsPageNew: React.FC = () => {
                         <ListItem>
                           <ListItemText
                             primary="Lines of Code"
-                            secondary={fileReport.metrics.lines_of_code}
+                            secondary={fileReport.metrics?.lines_of_code || 'N/A'}
                           />
                         </ListItem>
                         <ListItem>
                           <ListItemText
                             primary="Cyclomatic Complexity"
-                            secondary={fileReport.metrics.cyclomatic_complexity}
+                            secondary={fileReport.metrics?.cyclomatic_complexity || 'N/A'}
                           />
                         </ListItem>
                         <ListItem>
                           <ListItemText
                             primary="Maintainability Index"
-                            secondary={`${fileReport.metrics.maintainability_index.toFixed(1)}/100`}
+                            secondary={fileReport.metrics?.maintainability_index 
+                              ? `${fileReport.metrics.maintainability_index.toFixed(1)}/100`
+                              : 'N/A'
+                            }
                           />
                         </ListItem>
                       </List>
@@ -302,7 +307,7 @@ const ResultsPageNew: React.FC = () => {
                       <Typography variant="subtitle2" gutterBottom>
                         ⚠️ Issues Found
                       </Typography>
-                      {fileReport.style_issues.length > 0 && (
+                      {fileReport.style_issues?.length > 0 && (
                         <Alert severity="warning" sx={{ mb: 1 }}>
                           <Typography variant="body2">
                             <strong>{fileReport.style_issues.length} Style Issue(s)</strong>
@@ -314,7 +319,7 @@ const ResultsPageNew: React.FC = () => {
                           ))}
                         </Alert>
                       )}
-                      {fileReport.security_issues.length > 0 && (
+                      {fileReport.security_issues?.length > 0 && (
                         <Alert severity="error" sx={{ mb: 1 }}>
                           <Typography variant="body2">
                             <strong>{fileReport.security_issues.length} Security Issue(s)</strong>
@@ -326,7 +331,8 @@ const ResultsPageNew: React.FC = () => {
                           ))}
                         </Alert>
                       )}
-                      {fileReport.style_issues.length === 0 && fileReport.security_issues.length === 0 && (
+                      {(!fileReport.style_issues || fileReport.style_issues.length === 0) && 
+                       (!fileReport.security_issues || fileReport.security_issues.length === 0) && (
                         <Alert severity="success">
                           <Typography variant="body2">No issues found! ✨</Typography>
                         </Alert>
@@ -341,7 +347,7 @@ const ResultsPageNew: React.FC = () => {
                           🤖 AI Feedback
                         </Typography>
                         <Typography variant="body2" paragraph>
-                          {fileReport.ai_feedback.summary}
+                          {fileReport.ai_feedback.summary || 'No summary available'}
                         </Typography>
                         <Grid container spacing={2}>
                           <Grid item xs={12} sm={6}>
@@ -349,13 +355,13 @@ const ResultsPageNew: React.FC = () => {
                               <strong>Strengths:</strong>
                             </Typography>
                             <List dense>
-                              {fileReport.ai_feedback.strengths.map((strength, i) => (
+                              {fileReport.ai_feedback.strengths?.map((strength, i) => (
                                 <ListItem key={i}>
                                   <ListItemText
                                     primary={<Typography variant="caption">• {strength}</Typography>}
                                   />
                                 </ListItem>
-                              ))}
+                              )) || <Typography variant="caption">No strengths listed</Typography>}
                             </List>
                           </Grid>
                           <Grid item xs={12} sm={6}>
@@ -363,13 +369,13 @@ const ResultsPageNew: React.FC = () => {
                               <strong>Improvements:</strong>
                             </Typography>
                             <List dense>
-                              {fileReport.ai_feedback.improvements.map((improvement, i) => (
+                              {fileReport.ai_feedback.improvements?.map((improvement, i) => (
                                 <ListItem key={i}>
                                   <ListItemText
                                     primary={<Typography variant="caption">• {improvement}</Typography>}
                                   />
                                 </ListItem>
-                              ))}
+                              )) || <Typography variant="caption">No improvements suggested</Typography>}
                             </List>
                           </Grid>
                         </Grid>
@@ -503,16 +509,32 @@ const ResultsPageNew: React.FC = () => {
             {/* Recommendations */}
             {plagiarismReport.recommendations && plagiarismReport.recommendations.length > 0 && (
               <Box sx={{ mt: 3 }}>
-                <Typography variant="h6" gutterBottom>
-                  💡 Recommendations
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
+                  Recommendations
                 </Typography>
-                <List>
+                <Box sx={{ 
+                  bgcolor: 'grey.50', 
+                  p: 3, 
+                  borderRadius: 1,
+                  border: '1px solid',
+                  borderColor: 'grey.200'
+                }}>
                   {plagiarismReport.recommendations.map((rec, idx) => (
-                    <ListItem key={idx}>
-                      <ListItemText primary={`• ${rec}`} />
-                    </ListItem>
+                    <Typography 
+                      key={idx}
+                      variant="body2" 
+                      sx={{ 
+                        mb: idx < plagiarismReport.recommendations.length - 1 ? 1.5 : 0,
+                        whiteSpace: 'pre-wrap',
+                        fontFamily: 'monospace',
+                        fontSize: '0.875rem',
+                        lineHeight: 1.6
+                      }}
+                    >
+                      {rec}
+                    </Typography>
                   ))}
-                </List>
+                </Box>
               </Box>
             )}
           </CardContent>

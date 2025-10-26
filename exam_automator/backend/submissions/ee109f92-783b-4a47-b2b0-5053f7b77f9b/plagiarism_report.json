@@ -1,0 +1,38 @@
+{
+  "submission_id": "ee109f92-783b-4a47-b2b0-5053f7b77f9b",
+  "student_name": "Karthik",
+  "submission_type": "code",
+  "overall_originality_score": 10.0,
+  "total_matches_found": 1,
+  "similarity_matches": [
+    {
+      "submission_id": "ai_generated",
+      "student_name": "AI Tool (ChatGPT/Copilot/Claude)",
+      "similarity_percentage": 90.0,
+      "matching_sections": [
+        {
+          "source_text": "Quick triage: ai_generated",
+          "target_text": "AI pattern detected",
+          "similarity": "0.9"
+        }
+      ],
+      "match_type": "ai_generated",
+      "confidence": 0.9,
+      "flagged": true
+    }
+  ],
+  "flagged_sections": [
+    {
+      "source_submission": "AI_Tool",
+      "text": "High confidence determination from initial analysis",
+      "similarity": 90.0,
+      "type": "ai_generated"
+    }
+  ],
+  "risk_level": "critical",
+  "recommendations": [
+    "### ASSESSMENT\nThe plagiarism detection results indicate a HIGH RISK of academic integrity concerns, given the extremely low originality score of 10.0% and the detection of AI-generated content with a high confidence level of 90.0%.\n\n### DETAILED FINDINGS\nThe plagiarism detection results reveal the following findings:\n- **AI-Generated Content**: The detection of AI-generated content with a confidence level of 90.0% in the file \"ai_generated\" suggests that a significant portion of the submitted code may have been generated using artificial intelligence tools. This is a serious concern, as it may indicate that the student did not independently develop the code. The sample provided, although not specified, would be crucial in determining the extent of AI-generated content.\n\n### REQUIRED ACTIONS\n1. **Review the Sample**: Examine the sample from the \"ai_generated\" file to understand the nature and extent of the AI-generated content.\n2. **Interview the Student**: Conduct a meeting with the student to discuss the findings, understand their process, and determine whether they used AI tools for generating the code.\n3. **Assess Independent Implementation**: Evaluate whether the student can demonstrate an understanding of the code and algorithms used, to assess if the submission, despite similarities, represents an independent implementation of a common algorithm.\n4. **Consider Resubmission**: Depending on the outcome of the interview and assessment, consider allowing the student to resubmit the assignment, ensuring they understand the expectations regarding original work and the appropriate use of AI tools.\n\n### BEST PRACTICES\n1. **Clear Guidelines**: Provide clear guidelines on the acceptable use of AI tools in coding assignments, emphasizing the importance of original work and proper citation.\n2. **Education on AI Use**: Educate students on the ethical use of AI-generated content, highlighting the difference between using AI for inspiration versus submitting AI-generated work as one's own.\n3. **Regular Feedback**: Offer regular feedback sessions where students can discuss their approach and receive guidance on maintaining academic integrity in their coding assignments.\n4. **Transparent Assessment**: Ensure that the assessment criteria clearly outline the expectations for originality and the consequences of submitting work that is not entirely one's own.\n\n### RECOMMENDED NEXT STEPS\nGiven the concerning originality score, the following 5-step action plan is recommended:\n1. **Document the Findings**: Record the plagiarism detection results and all subsequent actions taken, including meetings with the student and any decisions made regarding the assignment.\n2. **Meet with the Student**: Schedule a meeting with the student to discuss the findings, ensuring they understand the implications of the AI-generated content detection.\n3. **Conduct a Thorough Review**: Perform a thorough review of the student's work to determine the extent of the issue and whether it represents a pattern of behavior.\n4. **Apply Academic Integrity Policies**: Apply the institution's academic integrity policies to this case, ensuring fairness and consistency in the actions taken.\n5. **Follow-Up and Monitor**: After addressing the current issue, monitor the student's future submissions to prevent recurrence and provide additional support or guidance as needed to ensure the student understands and adheres to academic integrity standards."
+  ],
+  "analysis_timestamp": "2025-10-26T15:33:00.158631",
+  "sources_checked": 1
+}

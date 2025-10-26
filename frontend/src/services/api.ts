@@ -2,6 +2,34 @@ import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
+// Configure axios to include auth token automatically
+axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Handle 401 errors globally
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Token expired or invalid
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export interface UploadResponse {
   message: string;
   upload_id: string;
@@ -429,15 +457,29 @@ class ApiService {
   }
 
   // Analyze both code and plagiarism
-  async analyzeAll(submissionId: string, includeAiFeedback: boolean = false, checkLimit: number = 10): Promise<{
+  async analyzeAll(
+    submissionId: string, 
+    includeAiFeedback: boolean = false, 
+    checkLimit: number = 10,
+    aiTools?: string[]
+  ): Promise<{
     success: boolean;
     code_analysis: CodeAnalysisReport;
     plagiarism_report: PlagiarismReport;
   }> {
+    const params: any = { 
+      include_ai_feedback: includeAiFeedback, 
+      check_limit: checkLimit 
+    };
+    
+    if (aiTools && aiTools.length > 0) {
+      params.ai_tools = aiTools.join(',');
+    }
+    
     const response = await this.api.post(
       `/peer-review/submissions/${submissionId}/analyze-all`,
       null,
-      { params: { include_ai_feedback: includeAiFeedback, check_limit: checkLimit } }
+      { params }
     );
     return response.data;
   }
@@ -474,4 +516,5 @@ class ApiService {
 }
 
 export const apiService = new ApiService();
+export const peerReviewAPI = apiService; // Alias for backward compatibility
 export default apiService;

@@ -3,7 +3,7 @@ Peer Review API Routes
 Handles submissions, plagiarism detection, code analysis, and reviews
 """
 
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Depends
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Depends, Query
 from typing import List, Optional, Dict, Any
 import os
 import json
@@ -32,6 +32,7 @@ from services.plagiarism_detector import PlagiarismDetector
 from services.code_analyzer import CodeAnalyzer
 from ocr.extractor import OCRExtractor
 from config.settings import get_settings
+from db.mongodb import get_database
 
 router = APIRouter(prefix="/peer-review", tags=["peer-review"])
 
@@ -161,14 +162,21 @@ async def upload_submission(
             "metadata": metadata,
             "files": uploaded_files,
             "submitted_at": datetime.now().isoformat(),
+            "created_at": datetime.now().isoformat(),  # Add created_at for frontend compatibility
             "updated_at": datetime.now().isoformat()
         }
         
-        # Save submission metadata
+        # Save to MongoDB
+        db = get_database()
+        result = await db["submissions"].insert_one(submission_data.copy())
+        print(f"✅ Submission saved to MongoDB: {submission_id}")
+        
+        # Also save submission metadata as JSON backup
         metadata_path = submission_dir / "submission.json"
         with open(metadata_path, "w") as f:
             json.dump(submission_data, f, indent=2)
         
+        # Return without MongoDB ObjectId
         return {
             "success": True,
             "message": "Submission uploaded successfully",
@@ -178,7 +186,12 @@ async def upload_submission(
             "submission": submission_data
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
+        import traceback
+        print(f"❌ Upload error: {str(e)}")
+        print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
 
@@ -194,26 +207,32 @@ async def get_submission(submission_id: str):
         Complete submission information
     """
     try:
-        submission_dir = SUBMISSIONS_DIR / submission_id
-        metadata_path = submission_dir / "submission.json"
+        # Fetch from MongoDB
+        db = get_database()
+        submission = await db["submissions"].find_one({"submission_id": submission_id})
         
-        if not metadata_path.exists():
+        if not submission:
             raise HTTPException(status_code=404, detail="Submission not found")
         
-        with open(metadata_path, "r") as f:
-            submission = json.load(f)
+        # Convert MongoDB _id to string
+        if "_id" in submission:
+            submission["_id"] = str(submission["_id"])
         
-        # Check for analysis reports
+        # Check for analysis reports in filesystem
+        submission_dir = SUBMISSIONS_DIR / submission_id
         plagiarism_report_path = submission_dir / "plagiarism_report.json"
         code_analysis_path = submission_dir / "code_analysis.json"
+        ai_tools_results_path = submission_dir / "ai_tools_results.json"
         
         has_plagiarism_report = plagiarism_report_path.exists()
         has_code_analysis = code_analysis_path.exists()
+        has_ai_tools_results = ai_tools_results_path.exists()
         
         return {
             "submission": submission,
             "has_plagiarism_report": has_plagiarism_report,
-            "has_code_analysis": has_code_analysis
+            "has_code_analysis": has_code_analysis,
+            "has_ai_tools_results": has_ai_tools_results
         }
         
     except HTTPException:
@@ -234,17 +253,15 @@ async def get_student_submissions(student_id: str):
         List of submissions
     """
     try:
-        submissions = []
+        # Fetch from MongoDB
+        db = get_database()
+        cursor = db["submissions"].find({"student_id": student_id})
+        submissions = await cursor.to_list(length=None)
         
-        for submission_dir in SUBMISSIONS_DIR.iterdir():
-            if submission_dir.is_dir():
-                metadata_path = submission_dir / "submission.json"
-                if metadata_path.exists():
-                    with open(metadata_path, "r") as f:
-                        submission = json.load(f)
-                    
-                    if submission.get("student_id") == student_id:
-                        submissions.append(submission)
+        # Convert MongoDB _id to string
+        for submission in submissions:
+            if "_id" in submission:
+                submission["_id"] = str(submission["_id"])
         
         # Sort by submission date (newest first)
         submissions.sort(key=lambda x: x.get("submitted_at", ""), reverse=True)
@@ -630,64 +647,312 @@ async def get_code_analysis(submission_id: str):
         raise HTTPException(status_code=500, detail=f"Failed to retrieve report: {str(e)}")
 
 
+@router.get("/submissions/{submission_id}/ai-tools-results", response_model=Dict[str, Any])
+async def get_ai_tools_results(submission_id: str):
+    """
+    Get AI tools results for a submission
+    
+    Args:
+        submission_id: Submission identifier
+    
+    Returns:
+        AI tools results data
+    """
+    try:
+        report_path = SUBMISSIONS_DIR / submission_id / "ai_tools_results.json"
+        
+        if not report_path.exists():
+            raise HTTPException(
+                status_code=404,
+                detail="AI tools results not found. Run AI tools analysis first."
+            )
+        
+        with open(report_path, "r") as f:
+            results = json.load(f)
+        
+        return results
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve AI tools results: {str(e)}")
+
+
 # ============================================================================
 # COMPREHENSIVE ANALYSIS ENDPOINT
 # ============================================================================
 
 @router.post("/submissions/{submission_id}/analyze-all", response_model=Dict[str, Any])
-async def analyze_all(submission_id: str):
+async def analyze_all(
+    submission_id: str,
+    ai_tools: Optional[str] = Query(None, description="Comma-separated list of AI tools to run: ai-detector,plagiarism,humanizer,paraphraser,grammar")
+):
     """
-    Run both plagiarism detection and code analysis
+    Run both plagiarism detection and code analysis, plus selected AI tools
     
     Args:
         submission_id: Submission to analyze
+        ai_tools: Optional comma-separated list of AI tools to run
     
     Returns:
-        Combined analysis results
+        Combined analysis results including AI tool outputs
     """
     try:
         print(f"🚀 Running comprehensive analysis for submission: {submission_id}")
+        if ai_tools:
+            print(f"📊 AI Tools selected: {ai_tools}")
         
         results = {
             "submission_id": submission_id,
             "plagiarism_check": None,
             "code_analysis": None,
+            "ai_tools_results": {},
             "errors": []
         }
         
-        # Run plagiarism check
+        # Get submission to extract file content
         try:
-            plagiarism_result = await check_plagiarism(submission_id)
-            results["plagiarism_check"] = {
-                "success": True,
-                "originality_score": plagiarism_result["report"]["overall_originality_score"],
-                "risk_level": plagiarism_result["report"]["risk_level"],
-                "matches_found": plagiarism_result["report"]["total_matches_found"]
-            }
+            # Fetch from MongoDB
+            db = get_database()
+            print(f"📁 Fetching submission from MongoDB: {submission_id}")
+            submission_doc = await db["submissions"].find_one({"submission_id": submission_id})
+            
+            if not submission_doc:
+                raise HTTPException(status_code=404, detail="Submission not found")
+            
+            print(f"✅ Found submission with {len(submission_doc.get('files', []))} files")
+        except HTTPException:
+            raise
         except Exception as e:
-            results["errors"].append(f"Plagiarism check failed: {str(e)}")
-            results["plagiarism_check"] = {"success": False, "error": str(e)}
+            print(f"❌ Error fetching submission: {str(e)}")
+            import traceback
+            print(traceback.format_exc())
+            raise HTTPException(status_code=500, detail=f"Error fetching submission: {str(e)}")
         
-        # Run code analysis
-        try:
-            code_result = await analyze_code(submission_id)
-            results["code_analysis"] = {
-                "success": True,
-                "average_score": code_result["report"]["average_overall_score"],
-                "files_analyzed": code_result["report"]["total_files_analyzed"]
-            }
-        except Exception as e:
-            results["errors"].append(f"Code analysis failed: {str(e)}")
-            results["code_analysis"] = {"success": False, "error": str(e)}
+        # Extract text from uploaded files for AI tools
+        file_content = ""
+        if submission_doc.get("files"):
+            # Get first file content (you can modify to handle multiple files)
+            first_file = submission_doc["files"][0]
+            file_path = first_file.get("file_path", "")
+            print(f"📄 Reading file: {file_path}")
+            if os.path.exists(file_path):
+                try:
+                                        # Check if it's a PDF
+                    if file_path.lower().endswith('.pdf'):
+                        # Try to extract text from PDF using OCR
+                        ocr = OCRExtractor()
+                        file_content = ocr.extract_text(file_path)
+                        print(f"✅ Extracted {len(file_content)} characters from PDF")
+                    else:
+                        # Read as text file
+                        with open(file_path, 'r', encoding='utf-8') as f:
+                            file_content = f.read()
+                        print(f"✅ Read {len(file_content)} characters from file")
+                except Exception as e:
+                    print(f"❌ Error reading file: {str(e)}")
+                    # Try reading first 2000 bytes as fallback
+                    try:
+                        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                            file_content = f.read(2000)
+                        print(f"⚠️  Used fallback: read {len(file_content)} characters")
+                    except:
+                        file_content = ""
+            else:
+                print(f"⚠️  File does not exist: {file_path}")
+        
+        # Run selected AI tools
+        if ai_tools and file_content:
+            from services.plagiarism_detector import PlagiarismDetector
+            from services.groq_ai_service import get_groq_ai_service
+            
+            print(f"🔧 Initializing AI services...")
+            tool_list = [t.strip() for t in ai_tools.split(',')]
+            detector = PlagiarismDetector()
+            groq_service = get_groq_ai_service()
+            
+            for tool in tool_list:
+                try:
+                    if tool == 'ai-detector':
+                        print(f"🤖 Running AI Detector...")
+                        ai_result = detector.detect_ai_generated_code(file_content, "submission_file.py")
+                        confidence = ai_result.get('confidence', 0)
+                        if confidence > 1:
+                            confidence = confidence / 100.0
+                        results["ai_tools_results"]["ai_detector"] = {
+                            "is_ai_generated": ai_result.get('is_ai_generated', False),
+                            "confidence": round(confidence * 100, 2),
+                            "confidence_level": ai_result.get('confidence_level', 'unknown'),
+                            "explanation": ai_result.get('explanation', '')
+                        }
+                    
+                    elif tool == 'plagiarism':
+                        print(f"📋 Running FULL Plagiarism Check...")
+                        try:
+                            # Run the full plagiarism detection (same as the old system)
+                            plagiarism_result = await check_plagiarism(submission_id, check_limit=50)
+                            
+                            # Extract the report from the result
+                            report = plagiarism_result.get("report", {})
+                            
+                            # Clean up recommendations - split into separate readable points
+                            raw_recommendations = report.get("recommendations", [])
+                            clean_recommendations = []
+                            
+                            for rec in raw_recommendations:
+                                # Remove markdown headers (###, ##, #)
+                                cleaned = rec.replace('###', '').replace('##', '').replace('#', '')
+                                # Remove bold markers
+                                cleaned = cleaned.replace('**', '')
+                                # Remove existing bullet points
+                                cleaned = cleaned.replace('✅', '').replace('•', '').replace('*', '')
+                                
+                                # Split by common sentence delimiters that indicate separate points
+                                # Look for numbered points (1. 2. 3.) or sentence endings
+                                sentences = []
+                                
+                                # First, split by numbered points
+                                import re
+                                parts = re.split(r'(?:\d+\.\s+)', cleaned)
+                                for part in parts:
+                                    if part.strip():
+                                        # Further split long paragraphs by sentence endings followed by capital letters
+                                        sub_parts = re.split(r'\.(?=\s+[A-Z])', part)
+                                        for sub in sub_parts:
+                                            clean_text = sub.strip()
+                                            # Clean up common labels
+                                            clean_text = clean_text.replace('ASSESSMENT', '').replace('DETAILED FINDINGS', '')
+                                            clean_text = clean_text.replace('REQUIRED ACTIONS', '').replace('BEST PRACTICES', '')
+                                            clean_text = clean_text.replace('RECOMMENDED NEXT STEPS', '')
+                                            clean_text = ' '.join(clean_text.split())  # Clean whitespace
+                                            
+                                            # Only add if it's meaningful (more than 20 chars and not just labels)
+                                            if len(clean_text) > 20 and clean_text not in ['Given the results', 'The instructor may consider']:
+                                                # Add period if it doesn't end with one
+                                                if not clean_text.endswith('.'):
+                                                    clean_text += '.'
+                                                sentences.append(clean_text)
+                                
+                                clean_recommendations.extend(sentences)
+                            
+                            # Limit to max 8 most meaningful recommendations
+                            clean_recommendations = clean_recommendations[:8]
+                            
+                            results["ai_tools_results"]["plagiarism"] = {
+                                "success": True,
+                                "overall_originality_score": report.get("overall_originality_score", 0),
+                                "total_matches_found": report.get("total_matches_found", 0),
+                                "similarity_matches": report.get("similarity_matches", []),
+                                "flagged_sections": report.get("flagged_sections", []),
+                                "risk_level": report.get("risk_level", "unknown"),
+                                "recommendations": clean_recommendations,
+                                "sources_checked": report.get("sources_checked", 0)
+                            }
+                            print(f"✅ Plagiarism check complete: {report.get('overall_originality_score')}% original")
+                        except Exception as plag_err:
+                            print(f"❌ Full plagiarism check failed: {str(plag_err)}")
+                            # Fallback to quick AI detection if full check fails
+                            plag_result = detector.detect_ai_generated_code(file_content, "submission_file.py")
+                            confidence = plag_result.get('confidence', 0)
+                            if confidence > 1:
+                                confidence = confidence / 100.0
+                            originality = (1.0 - confidence) * 100.0
+                            
+                            # Determine risk level based on originality
+                            if originality >= 80:
+                                risk_level = "low"
+                            elif originality >= 60:
+                                risk_level = "medium"
+                            else:
+                                risk_level = "high"
+                            
+                            results["ai_tools_results"]["plagiarism"] = {
+                                "success": True,
+                                "overall_originality_score": round(originality, 2),
+                                "total_matches_found": 0,
+                                "similarity_matches": [],
+                                "flagged_sections": [],
+                                "risk_level": risk_level,
+                                "recommendations": [
+                                    plag_result.get('explanation', 'AI detection analysis performed'),
+                                    f"Originality Score: {round(originality, 2)}%",
+                                    f"AI Confidence: {round(confidence * 100, 2)}%"
+                                ],
+                                "sources_checked": 0,
+                                "note": "Full plagiarism check unavailable. Showing AI detection results only."
+                            }
+                    
+                    elif tool == 'humanizer':
+                        print(f"👤 Running AI Humanizer...")
+                        humanize_result = groq_service.humanize_text(file_content[:2000], "professional")  # Limit length
+                        results["ai_tools_results"]["humanizer"] = humanize_result
+                    
+                    elif tool == 'paraphraser':
+                        print(f"✍️  Running Paraphraser...")
+                        paraphrase_result = groq_service.paraphrase_text(file_content[:2000], "academic")
+                        results["ai_tools_results"]["paraphraser"] = paraphrase_result
+                    
+                    elif tool == 'grammar':
+                        print(f"📝 Running Grammar Checker...")
+                        grammar_result = groq_service.check_grammar(file_content[:2000])
+                        results["ai_tools_results"]["grammar"] = grammar_result
+                        
+                except Exception as e:
+                    print(f"❌ AI tool '{tool}' failed: {str(e)}")
+                    results["errors"].append(f"AI tool '{tool}' failed: {str(e)}")
+                    results["ai_tools_results"][tool] = {"success": False, "error": str(e)}
+        
+        # Only run standard plagiarism check if NOT using AI tools (for backward compatibility)
+        # If user selected AI tools, they control what runs
+        if not ai_tools:
+            try:
+                plagiarism_result = await check_plagiarism(submission_id)
+                results["plagiarism_check"] = {
+                    "success": True,
+                    "originality_score": plagiarism_result["report"]["overall_originality_score"],
+                    "risk_level": plagiarism_result["report"]["risk_level"],
+                    "matches_found": plagiarism_result["report"]["total_matches_found"]
+                }
+            except Exception as e:
+                results["errors"].append(f"Plagiarism check failed: {str(e)}")
+                results["plagiarism_check"] = {"success": False, "error": str(e)}
+            
+            # Run code analysis
+            try:
+                code_result = await analyze_code(submission_id)
+                results["code_analysis"] = {
+                    "success": True,
+                    "average_score": code_result["report"]["average_overall_score"],
+                    "files_analyzed": code_result["report"]["total_files_analyzed"]
+                }
+            except Exception as e:
+                results["errors"].append(f"Code analysis failed: {str(e)}")
+                results["code_analysis"] = {"success": False, "error": str(e)}
         
         print(f"✅ Comprehensive analysis complete")
+        
+        # Save AI tool results to file if any were run
+        if results.get("ai_tools_results"):
+            submission_dir = SUBMISSIONS_DIR / submission_id
+            ai_results_path = submission_dir / "ai_tools_results.json"
+            try:
+                with open(ai_results_path, "w") as f:
+                    json.dump(results["ai_tools_results"], f, indent=2)
+                print(f"💾 Saved AI tool results to {ai_results_path}")
+            except Exception as e:
+                print(f"⚠️  Failed to save AI tool results: {str(e)}")
         
         return {
             "success": True,
             "results": results
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
+        import traceback
+        print(f"❌ Comprehensive analysis error: {str(e)}")
+        print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Comprehensive analysis failed: {str(e)}")
 
 
@@ -798,25 +1063,32 @@ async def get_student_dashboard(student_id: str):
     try:
         submissions = await get_student_submissions(student_id)
         
-        # Calculate statistics
+        # Calculate statistics based on actual statuses
         total_submissions = len(submissions)
-        under_review = len([s for s in submissions if s.get("status") == "under_review"])
+        submitted = len([s for s in submissions if s.get("status") == "submitted"])
+        processing = len([s for s in submissions if s.get("status") == "processing"])
         completed = len([s for s in submissions if s.get("status") == "completed"])
+        flagged = len([s for s in submissions if s.get("status") == "flagged"])
+        under_review = len([s for s in submissions if s.get("status") in ["under_review", "processing"]])
         
-        # Get recent submissions (last 5)
-        recent_submissions = submissions[:5]
+        # Get all submissions (most recent first) for the list
+        all_submissions = submissions
         
         dashboard = {
             "student_id": student_id,
+            "student_name": submissions[0].get("student_name") if submissions else "Student",
             "total_submissions": total_submissions,
-            "submissions_under_review": under_review,
             "submissions_completed": completed,
-            "recent_submissions": recent_submissions,
+            "submissions_under_review": under_review,
+            "submissions_flagged": flagged,
+            "recent_submissions": all_submissions,  # Return all submissions
             "statistics": {
                 "total": total_submissions,
-                "under_review": under_review,
+                "submitted": submitted,
+                "processing": processing,
                 "completed": completed,
-                "draft": len([s for s in submissions if s.get("status") == "draft"])
+                "under_review": under_review,
+                "flagged": flagged
             }
         }
         

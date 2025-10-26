@@ -1,0 +1,38 @@
+{
+  "submission_id": "b7df0d65-7913-46f0-82d7-71a0d49fa857",
+  "student_name": "Karthik",
+  "submission_type": "code",
+  "overall_originality_score": 10.0,
+  "total_matches_found": 1,
+  "similarity_matches": [
+    {
+      "submission_id": "ai_generated",
+      "student_name": "AI Tool (ChatGPT/Copilot/Claude)",
+      "similarity_percentage": 90.0,
+      "matching_sections": [
+        {
+          "source_text": "Quick triage: ai_generated",
+          "target_text": "AI pattern detected",
+          "similarity": "0.9"
+        }
+      ],
+      "match_type": "ai_generated",
+      "confidence": 0.9,
+      "flagged": true
+    }
+  ],
+  "flagged_sections": [
+    {
+      "source_submission": "AI_Tool",
+      "text": "High confidence determination from initial analysis",
+      "similarity": 90.0,
+      "type": "ai_generated"
+    }
+  ],
+  "risk_level": "critical",
+  "recommendations": [
+    "### ASSESSMENT\nThe plagiarism detection results indicate a CRITICAL severity level due to the extremely low originality score of 10.0% and the presence of AI-generated content.\n\n### DETAILED FINDINGS\nThe plagiarism detection results reveal the following:\n\n* **AI-Generated Content**: The detection of AI-generated content with a confidence level of 90.0% in the file \"ai_generated\" suggests that a significant portion of the submitted code was likely generated using artificial intelligence tools. This is a serious concern, as it may indicate that the student did not independently develop the code.\n* No other categories (Internal Duplication, Exact Matches, Paraphrasing) have findings, as the submission type is code and the primary concern is AI-generated content.\n\nThe confidence level of 90.0% indicates a high likelihood that the detected content was indeed generated using AI tools. This severity level warrants further investigation and action.\n\n### REQUIRED ACTIONS\n1. Review the submitted code and the detected AI-generated content to understand the extent of the issue.\n2. Meet with the student to discuss the findings, the implications of AI-generated content, and the expectations for original work in the course.\n3. Determine whether the student has properly cited or disclosed any AI-generated content, if applicable.\n4. Consider re-evaluating the assignment or providing an alternative assignment to assess the student's understanding and skills.\n\n### BEST PRACTICES\n1. Clearly communicate the expectations for original work and the use of AI tools in coding assignments.\n2. Provide guidance on proper citation and disclosure of AI-generated content, if allowed.\n3. Regularly review and update assignments to minimize the likelihood of AI-generated content being submitted.\n4. Consider using coding assignments that require more creative problem-solving and less likelihood of AI-generated solutions.\n\n### RECOMMENDED NEXT STEPS\nGiven the concerning originality score, the following 5-step action plan is recommended:\n\n1. **Gather more information**: Review the course syllabus, assignment instructions, and any relevant communication with the student to understand the context and expectations.\n2. **Meet with the student**: Discuss the findings, the implications of AI-generated content, and the expectations for original work in the course.\n3. **Assess the student's understanding**: Evaluate the student's knowledge and skills through an alternative assignment or a verbal assessment to determine their level of understanding.\n4. **Determine the appropriate course of action**: Based on the assessment and the student's response, decide whether to accept the assignment, provide a warning, or impose penalties, such as a grade reduction or failure in the assignment.\n5. **Document the incident**: Maintain a record of the incident, including the findings, discussions with the student, and any subsequent actions taken, to ensure transparency and consistency in addressing academic integrity concerns."
+  ],
+  "analysis_timestamp": "2025-10-26T14:37:15.231864",
+  "sources_checked": 1
+}

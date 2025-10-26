@@ -1,0 +1,38 @@
+{
+  "submission_id": "af5609d5-ae70-4c8f-a862-c851612cc3df",
+  "student_name": "Karthik",
+  "submission_type": "code",
+  "overall_originality_score": 10.0,
+  "total_matches_found": 1,
+  "similarity_matches": [
+    {
+      "submission_id": "ai_generated",
+      "student_name": "AI Tool (ChatGPT/Copilot/Claude)",
+      "similarity_percentage": 90.0,
+      "matching_sections": [
+        {
+          "source_text": "Quick triage: ai_generated",
+          "target_text": "AI pattern detected",
+          "similarity": "0.9"
+        }
+      ],
+      "match_type": "ai_generated",
+      "confidence": 0.9,
+      "flagged": true
+    }
+  ],
+  "flagged_sections": [
+    {
+      "source_submission": "AI_Tool",
+      "text": "High confidence determination from initial analysis",
+      "similarity": 90.0,
+      "type": "ai_generated"
+    }
+  ],
+  "risk_level": "critical",
+  "recommendations": [
+    "### ASSESSMENT\nThe plagiarism detection results indicate a CRITICAL level of concern due to the extremely low originality score of 10.0% and the presence of AI-generated content.\n\n### DETAILED FINDINGS\nThe findings reveal the following:\n- **AI-Generated Content**: There is one detection of AI-generated content with a confidence level of 90.0%. This means that the plagiarism detection tool is 90.0% confident that the code in the file \"ai_generated\" was generated using artificial intelligence. In the context of code submissions, AI-generated content is a significant concern as it may indicate that the student did not produce the work independently.\n\n### REQUIRED ACTIONS\n1. Review the submission carefully to understand the extent of the AI-generated content and its impact on the overall work.\n2. Discuss the findings with the student to clarify the origin of the code and the role of AI in its generation.\n3. Evaluate whether the use of AI-generated content is acceptable in the context of the assignment and the course learning objectives.\n4. Consider requesting the student to resubmit the assignment with a clear explanation of how the code was generated and what parts, if any, were created using AI tools.\n\n### BEST PRACTICES\n1. Clearly communicate the expectations regarding the use of AI-generated content in code submissions to students at the beginning of the course.\n2. Provide guidelines on how to properly cite and disclose the use of AI tools in assignments.\n3. Offer resources and support to help students develop their coding skills independently.\n4. Regularly review and update the course materials and assignments to ensure they are resistant to AI-generated submissions.\n\n### RECOMMENDED NEXT STEPS\nGiven the critical nature of the findings, the following 5-step action plan is recommended:\n1. **Review Course Policies**: Ensure that the course policies clearly address the use of AI-generated content and communicate these expectations to the student.\n2. **Meet with the Student**: Discuss the findings with the student to understand the circumstances surrounding the submission and to clarify the expectations.\n3. **Assess the Impact**: Evaluate the impact of the AI-generated content on the student's learning outcomes and the overall integrity of the course.\n4. **Determine Appropriate Action**: Based on the discussion and assessment, determine the appropriate action, which may include requesting a resubmission, providing additional support, or taking disciplinary action.\n5. **Document the Process**: Maintain a record of the steps taken to address the issue, including the discussion with the student, the assessment of the impact, and the determination of the appropriate action."
+  ],
+  "analysis_timestamp": "2025-10-26T16:05:54.282999",
+  "sources_checked": 1
+}

@@ -1,0 +1,15 @@
+{
+  "submission_id": "9fe39022-328e-4651-8fc4-6ba3e0415924",
+  "total_files_analyzed": 1,
+  "files_with_errors": 0,
+  "average_overall_score": 0,
+  "file_reports": [
+    {
+      "file_name": "a.c",
+      "file_id": "f18e170f-849c-4b85-b600-5d6579eadb7f",
+      "language": "javascript",
+      "message": "Analysis not yet supported for javascript. Coming soon!"
+    }
+  ],
+  "analysis_timestamp": "2025-10-26T12:20:51.708870"
+}

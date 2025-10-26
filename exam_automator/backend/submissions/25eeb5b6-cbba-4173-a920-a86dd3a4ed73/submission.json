@@ -1,0 +1,34 @@
+{
+  "submission_id": "25eeb5b6-cbba-4173-a920-a86dd3a4ed73",
+  "student_id": "S2O23",
+  "student_name": "Karthik",
+  "student_email": "karthikmsarma@gmail.com",
+  "submission_type": "code",
+  "status": "submitted",
+  "metadata": {
+    "title": "popoj",
+    "description": null,
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [],
+    "programming_languages": [],
+    "total_files": 1,
+    "total_size": 413
+  },
+  "files": [
+    {
+      "file_id": "0ab91524-531b-482e-bfb7-0f1b4ec84cac",
+      "original_name": "1.js",
+      "saved_name": "0ab91524-531b-482e-bfb7-0f1b4ec84cac.js",
+      "file_path": "submissions/25eeb5b6-cbba-4173-a920-a86dd3a4ed73/0ab91524-531b-482e-bfb7-0f1b4ec84cac.js",
+      "file_size": 413,
+      "file_type": "application/x-javascript",
+      "language": "javascript",
+      "uploaded_at": "2025-10-26T16:30:51.986668"
+    }
+  ],
+  "submitted_at": "2025-10-26T16:30:51.986688",
+  "created_at": "2025-10-26T16:30:51.986691",
+  "updated_at": "2025-10-26T16:30:52.405808",
+  "plagiarism_report_id": "331b5578-e6d6-44a8-9d7d-8aa889921dbf"
+}

@@ -1,0 +1,7 @@
+{
+  "humanizer": {
+    "success": false,
+    "error": "429 Client Error: Too Many Requests for url: https://api.groq.com/openai/v1/chat/completions",
+    "original": "// quick binary search I wrote\nfunction binSearch(arr, x) {\n  let l = 0, r = arr.length - 1;\n  while (l <= r) {\n    let m = Math.floor((l + r) / 2);\n    if (arr[m] === x) return m;\n    if (arr[m] < x) l = m + 1;\n    else r = m - 1;\n  }\n  return -1; // not found\n}\n\n// quick check\nconst nums = [2, 5, 8, 12, 16, 23, 38];\nconsole.log(binSearch(nums, 12)); // expect 3\nconsole.log(binSearch(nums, 7));  // expect -1\n"
+  }
+}

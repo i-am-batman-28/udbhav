@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Random Quote Thing :)</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f8f8f8;
+        padding: 40px;
+        text-align: center;
+      }
+      #quoteBox {
+        margin: 20px auto;
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        width: 400px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      }
+      button {
+        margin-top: 10px;
+        padding: 8px 16px;
+        cursor: pointer;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 6px;
+      }
+      button:hover {
+        background: #005fc9;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h1>Quote Generator</h1>
+
+    <div id="quoteBox">
+      <p id="quoteText">Click below to get inspired ✨</p>
+      <button id="newBtn">New Quote</button>
+    </div>
+
+    <script>
+      // made this quick, just for fun
+      const quotes = [
+        "Stay hungry, stay foolish.",
+        "You miss 100% of the shots you don’t take.",
+        "Code is like humor. When you have to explain it, it’s bad.",
+        "Do or do not. There is no try.",
+        "The best time to plant a tree was 20 years ago. The second best time is now."
+      ];
+
+      const btn = document.getElementById('newBtn');
+      const quoteText = document.getElementById('quoteText');
+
+      btn.addEventListener('click', () => {
+        const rand = Math.floor(Math.random() * quotes.length);
+        // not the fanciest, but it works :)
+        quoteText.textContent = quotes[rand];
+      });
+
+      // just so it shows one on load
+      window.addEventListener('load', () => {
+        btn.click();
+      });
+    </script>
+  </body>
+</html>

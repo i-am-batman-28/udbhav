@@ -1,0 +1,32 @@
+{
+  "submission_id": "0c0d01a1-a9e6-4a0c-98b8-88192d29880e",
+  "student_id": "S2O23",
+  "student_name": "Karthik",
+  "student_email": "karthikmsarma@gmail.com",
+  "submission_type": "code",
+  "status": "submitted",
+  "metadata": {
+    "title": "Ohio",
+    "description": null,
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [],
+    "programming_languages": [],
+    "total_files": 1,
+    "total_size": 1926
+  },
+  "files": [
+    {
+      "file_id": "c094fd8f-2388-48df-a37e-5f65cde38297",
+      "original_name": "a.txt",
+      "saved_name": "c094fd8f-2388-48df-a37e-5f65cde38297.txt",
+      "file_path": "submissions/0c0d01a1-a9e6-4a0c-98b8-88192d29880e/c094fd8f-2388-48df-a37e-5f65cde38297.txt",
+      "file_size": 1926,
+      "file_type": "text/plain",
+      "language": null,
+      "uploaded_at": "2025-10-26T15:16:34.907498"
+    }
+  ],
+  "submitted_at": "2025-10-26T15:16:34.907517",
+  "updated_at": "2025-10-26T15:16:34.907519"
+}

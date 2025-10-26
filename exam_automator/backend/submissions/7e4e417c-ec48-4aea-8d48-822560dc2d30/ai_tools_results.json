@@ -1,0 +1,9 @@
+{
+  "plagiarism": {
+    "success": true,
+    "overall_originality_score": 10.0,
+    "ai_confidence": 90.0,
+    "summary": "High confidence determination from initial analysis",
+    "note": "Full plagiarism check unavailable, showing AI detection results"
+  }
+}

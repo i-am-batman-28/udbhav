@@ -1,0 +1,11 @@
+{
+  "paraphraser": {
+    "success": true,
+    "original": "[PDF EXTRACTION NOT AVAILABLE] PDF file: ef90b354-5264-4fd5-bf37-c06a7b98c3e6.pdf",
+    "paraphrased": "Unfortunately, the original text is unavailable due to PDF extraction limitations, and thus a paraphrased version cannot be generated based on the provided information.",
+    "changes_summary": "Text rewritten in academic style",
+    "style_applied": "academic",
+    "word_count_original": 7,
+    "word_count_paraphrased": 24
+  }
+}

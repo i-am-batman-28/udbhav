@@ -1,0 +1,48 @@
+{
+  "submission_id": "5798f8a4-94c3-4f2f-85cf-7db03c36ce99",
+  "student_name": "Karthik",
+  "submission_type": "code",
+  "overall_originality_score": 15.0,
+  "total_matches_found": 1,
+  "similarity_matches": [
+    {
+      "submission_id": "ai_generated",
+      "student_name": "AI Tool (ChatGPT/Copilot/Claude)",
+      "similarity_percentage": 85.0,
+      "matching_sections": [
+        {
+          "source_text": "HIGH: Perfect grammar and punctuation throughout, academic vocabulary, and generic tra",
+          "target_text": "AI pattern detected",
+          "similarity": "0.85"
+        },
+        {
+          "source_text": "MEDIUM: Every paragraph has a similar length and structure, with perfect topic sentences",
+          "target_text": "AI pattern detected",
+          "similarity": "0.85"
+        },
+        {
+          "source_text": "LOW: Generic vocabulary and academic buzzwords are used, but not to an excessive degr",
+          "target_text": "AI pattern detected",
+          "similarity": "0.85"
+        }
+      ],
+      "match_type": "ai_generated",
+      "confidence": 0.85,
+      "flagged": true
+    }
+  ],
+  "flagged_sections": [
+    {
+      "source_submission": "AI_Tool",
+      "text": "The text exhibits several characteristics of AI-generated content, including perfect grammar and punctuation, overly formal language, and a lack of personal voice. While some human elements are present, the overall evidence suggests that the text is likely AI-generated.",
+      "similarity": 85.0,
+      "type": "ai_generated"
+    }
+  ],
+  "risk_level": "critical",
+  "recommendations": [
+    "### ASSESSMENT\nThe plagiarism detection results indicate a HIGH RISK of academic integrity concerns, given the low originality score of 15.0% and the detection of AI-generated content.\n\n### DETAILED FINDINGS\nThe findings reveal the following:\n- **AI-Generated Content**: The detection of AI-generated content with a confidence level of 85.0% in the file named \"ai_generated\" suggests that a significant portion of the submitted code may have been generated using artificial intelligence tools. This is a serious concern as it may indicate a lack of original work and understanding of the subject matter.\n- There are no reported findings for Internal Duplication, Exact Matches, or Paraphrasing, which suggests that the primary concern is the potential use of AI-generated content.\n\n### REQUIRED ACTIONS\n1. Review the submitted code in detail to understand the extent of the AI-generated content and its impact on the overall submission.\n2. Discuss the findings with the student to clarify the role of AI tools in generating the code and to assess the student's understanding of the subject matter.\n3. Evaluate whether the use of AI-generated content is acceptable in the context of the assignment and the course learning objectives.\n4. Consider requesting the student to resubmit the assignment with clear documentation of any AI-generated content and a reflection on what was learned from the experience.\n\n### BEST PRACTICES\n1. Clearly communicate the expectations regarding the use of AI tools and the originality of submissions to students at the beginning of the course.\n2. Provide guidelines on how to properly cite and acknowledge any AI-generated content in submissions.\n3. Offer resources and support to help students develop their coding skills and understanding of the subject matter, reducing the reliance on AI-generated content.\n4. Regularly review and update assignments to ensure they are designed to assess original thought and understanding, rather than just the ability to generate code.\n\n### RECOMMENDED NEXT STEPS\nGiven the concerning originality score, the following 5-step action plan is recommended:\n1. **Document the Findings**: Record the plagiarism detection results and the subsequent review of the submission in detail.\n2. **Meet with the Student**: Schedule a meeting with the student to discuss the findings, understand their perspective, and assess their knowledge of the subject matter.\n3. **Assess the Impact**: Evaluate the impact of the AI-generated content on the overall grade and the learning objectives of the course.\n4. **Develop a Remediation Plan**: If necessary, work with the student to develop a plan to improve their understanding of the subject matter and to resubmit the assignment with proper documentation of any AI-generated content.\n5. **Review and Update Course Policies**: Use this incident as an opportunity to review and update course policies regarding academic integrity, the use of AI tools, and the expectations for original work in submissions."
+  ],
+  "analysis_timestamp": "2025-10-26T15:43:37.307122",
+  "sources_checked": 1
+}

@@ -1,0 +1,38 @@
+{
+  "submission_id": "f79534e0-183a-46ac-9dc6-34baf7532913",
+  "student_name": "Karthik",
+  "submission_type": "code",
+  "overall_originality_score": 10.0,
+  "total_matches_found": 1,
+  "similarity_matches": [
+    {
+      "submission_id": "ai_generated",
+      "student_name": "AI Tool (ChatGPT/Copilot/Claude)",
+      "similarity_percentage": 90.0,
+      "matching_sections": [
+        {
+          "source_text": "Quick triage: ai_generated",
+          "target_text": "AI pattern detected",
+          "similarity": "0.9"
+        }
+      ],
+      "match_type": "ai_generated",
+      "confidence": 0.9,
+      "flagged": true
+    }
+  ],
+  "flagged_sections": [
+    {
+      "source_submission": "AI_Tool",
+      "text": "High confidence determination from initial analysis",
+      "similarity": 90.0,
+      "type": "ai_generated"
+    }
+  ],
+  "risk_level": "critical",
+  "recommendations": [
+    "### ASSESSMENT\nThe originality score of 10.0% indicates a CRITICAL level of concern regarding the academic integrity of the submission. This suggests that the majority of the content is not original and may have been generated or copied from another source.\n\n### DETAILED FINDINGS\nThe plagiarism detection results reveal the following:\n- **AI-Generated Content**: There is one detection of AI-generated content with a confidence level of 90.0%. This means that the algorithm is 90.0% certain that the detected content was generated using artificial intelligence. The file named \"ai_generated\" is the specific area of concern. In the context of a coding assignment, AI-generated content is a significant issue as it may indicate that the student did not produce the work independently.\n\n### REQUIRED ACTIONS\n1. Review the submission in detail, focusing on the \"ai_generated\" file, to understand the extent of the AI-generated content.\n2. Discuss the findings with the student, explaining the implications of AI-generated content in academic work and the importance of originality in coding assignments.\n3. Consider assigning a new task that requires the student to explain their coding process and decisions, to assess their understanding and ability to produce original work.\n4. Evaluate whether the student has properly cited any sources used in the assignment, if applicable.\n\n### BEST PRACTICES\n1. **Clear Guidelines**: Provide students with clear guidelines on what constitutes original work in coding assignments and the consequences of submitting AI-generated content.\n2. **Originality Emphasis**: Emphasize the importance of originality and independent work in coding assignments, encouraging students to seek help from instructors rather than relying on AI-generated solutions.\n3. **Regular Feedback**: Offer regular feedback to students on their progress, helping them understand where they might be tempted to use unauthorized aids and how to avoid such pitfalls.\n4. **Education on AI Use**: Educate students on the appropriate use of AI tools in academic work, distinguishing between legitimate uses (such as research aids) and inappropriate uses (such as generating assignments).\n\n### RECOMMENDED NEXT STEPS\nGiven the critical originality score, the following steps are recommended:\n1. **Meet with the Student**: Schedule a meeting with the student to discuss the findings, ensuring they understand the severity of the issue and the importance of academic integrity.\n2. **Assess Understanding**: Evaluate the student's understanding of the assignment and their ability to produce original work, potentially through an oral examination or a new, closely supervised assignment.\n3. **Document the Incident**: Document all discussions and actions taken regarding this incident, including any decisions on grades or further actions, to maintain transparency and consistency.\n4. **Review and Adjust Course Policies**: Review current course policies on academic integrity and consider adjustments to prevent similar incidents in the future, such as incorporating more frequent, smaller assignments to monitor student progress closely.\n5. **Consider Academic Integrity Procedures**: If necessary, initiate academic integrity procedures as outlined by the institution, ensuring that all actions are fair, educational, and in line with institutional policies."
+  ],
+  "analysis_timestamp": "2025-10-26T15:59:33.008288",
+  "sources_checked": 1
+}
