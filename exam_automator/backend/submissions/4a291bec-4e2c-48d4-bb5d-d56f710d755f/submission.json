@@ -1,0 +1,33 @@
+{
+  "submission_id": "4a291bec-4e2c-48d4-bb5d-d56f710d755f",
+  "student_id": "fggbdgs",
+  "student_name": "fhnsf",
+  "student_email": "gdbdga",
+  "submission_type": "code",
+  "status": "submitted",
+  "metadata": {
+    "title": "dgbdg",
+    "description": null,
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [],
+    "programming_languages": [],
+    "total_files": 1,
+    "total_size": 837
+  },
+  "files": [
+    {
+      "file_id": "55cb1668-f7c9-48e9-bea2-61c1e2692662",
+      "original_name": "a.txt",
+      "saved_name": "55cb1668-f7c9-48e9-bea2-61c1e2692662.txt",
+      "file_path": "submissions/4a291bec-4e2c-48d4-bb5d-d56f710d755f/55cb1668-f7c9-48e9-bea2-61c1e2692662.txt",
+      "file_size": 837,
+      "file_type": "text/plain",
+      "language": null,
+      "uploaded_at": "2025-10-26T00:10:16.105066"
+    }
+  ],
+  "submitted_at": "2025-10-26T00:10:16.105106",
+  "updated_at": "2025-10-26T00:10:18.348453",
+  "plagiarism_report_id": "167d720c-0fc5-4f18-8015-affccfcba412"
+}

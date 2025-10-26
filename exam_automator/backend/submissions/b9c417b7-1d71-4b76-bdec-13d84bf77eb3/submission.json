@@ -1,0 +1,35 @@
+{
+  "submission_id": "b9c417b7-1d71-4b76-bdec-13d84bf77eb3",
+  "student_id": "Karthik",
+  "student_name": "kdjblksdbjlk",
+  "student_email": "karthikmsarma@gmail.com",
+  "submission_type": "code",
+  "status": "submitted",
+  "metadata": {
+    "title": "lklkn",
+    "description": "",
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [],
+    "programming_languages": [
+      "python"
+    ],
+    "total_files": 1,
+    "total_size": 837
+  },
+  "files": [
+    {
+      "file_id": "766bacb6-d626-4cb5-b6cf-bae7c8850ac6",
+      "original_name": "a.html",
+      "saved_name": "766bacb6-d626-4cb5-b6cf-bae7c8850ac6.html",
+      "file_path": "submissions/b9c417b7-1d71-4b76-bdec-13d84bf77eb3/766bacb6-d626-4cb5-b6cf-bae7c8850ac6.html",
+      "file_size": 837,
+      "file_type": "text/html",
+      "language": null,
+      "uploaded_at": "2025-10-25T22:54:01.814874"
+    }
+  ],
+  "submitted_at": "2025-10-25T22:54:01.815507",
+  "updated_at": "2025-10-25T22:54:08.431099",
+  "plagiarism_report_id": "2cfa33a8-715e-4c9d-bd37-6ff2c0fdab98"
+}

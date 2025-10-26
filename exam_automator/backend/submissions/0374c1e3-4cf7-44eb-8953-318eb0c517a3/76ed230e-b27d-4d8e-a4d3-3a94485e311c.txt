@@ -1,0 +1,40 @@
+import time
+from functools import lru_cache
+
+def fib(n: int) -> int:
+    """Compute the nth Fibonacci number using memoization."""
+    if n < 2:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+@lru_cache(maxsize=None)
+def memoized_fib(n: int) -> int:
+    """Optimized Fibonacci computation with caching."""
+    if n < 2:
+        return n
+    return memoized_fib(n - 1) + memoized_fib(n - 2)
+
+def generate_fibonacci_sequence(count: int) -> list[int]:
+    """Generate a list of Fibonacci numbers up to count terms."""
+    return [memoized_fib(i) for i in range(count)]
+
+def save_to_file(data: list[int], filename: str = "fib_output.txt") -> None:
+    """Save Fibonacci sequence to a text file."""
+    with open(filename, "w", encoding="utf-8") as file:
+        file.write("\n".join(map(str, data)))
+
+def main() -> None:
+    """Main function to handle user input and performance tracking."""
+    try:
+        count = int(input("Enter number of Fibonacci terms to generate: "))
+        start_time = time.perf_counter()
+        sequence = generate_fibonacci_sequence(count)
+        duration = time.perf_counter() - start_time
+        print(f"Generated {count} Fibonacci numbers in {duration:.4f} seconds.")
+        save_to_file(sequence)
+        print("Results successfully written to 'fib_output.txt'")
+    except ValueError:
+        print("Invalid input. Please enter a valid integer.")
+
+if __name__ == "__main__":
+    main()

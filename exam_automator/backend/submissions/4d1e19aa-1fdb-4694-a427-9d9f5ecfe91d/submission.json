@@ -1,0 +1,33 @@
+{
+  "submission_id": "4d1e19aa-1fdb-4694-a427-9d9f5ecfe91d",
+  "student_id": "f sig",
+  "student_name": "ad a",
+  "student_email": "dbdb",
+  "submission_type": "code",
+  "status": "submitted",
+  "metadata": {
+    "title": "ffvafs",
+    "description": null,
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [],
+    "programming_languages": [],
+    "total_files": 1,
+    "total_size": 1773
+  },
+  "files": [
+    {
+      "file_id": "26f09502-d9cb-4373-930b-ba4379f407d5",
+      "original_name": "a-1.txt",
+      "saved_name": "26f09502-d9cb-4373-930b-ba4379f407d5.txt",
+      "file_path": "submissions/4d1e19aa-1fdb-4694-a427-9d9f5ecfe91d/26f09502-d9cb-4373-930b-ba4379f407d5.txt",
+      "file_size": 1773,
+      "file_type": "text/plain",
+      "language": null,
+      "uploaded_at": "2025-10-26T09:50:21.898528"
+    }
+  ],
+  "submitted_at": "2025-10-26T09:50:21.898558",
+  "updated_at": "2025-10-26T09:50:22.348832",
+  "plagiarism_report_id": "0c53909b-c4e8-43d6-833e-be74c7c0c735"
+}

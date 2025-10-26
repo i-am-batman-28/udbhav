@@ -1,0 +1,56 @@
+{
+  "submission_id": "cfe04150-eaf0-4eae-b408-39a078767b10",
+  "total_files_analyzed": 1,
+  "files_with_errors": 0,
+  "average_overall_score": 98.8,
+  "file_reports": [
+    {
+      "submission_id": "cfe04150-eaf0-4eae-b408-39a078767b10_f2bf47cc-06a6-4f22-ae82-76f2f8a6c222",
+      "language": "python",
+      "metrics": {
+        "lines_of_code": 17,
+        "lines_of_comments": 0,
+        "blank_lines": 4,
+        "cyclomatic_complexity": 5,
+        "maintainability_index": 100,
+        "comment_ratio": 0.0,
+        "average_function_length": 7.5,
+        "max_function_length": 10,
+        "number_of_functions": 2,
+        "number_of_classes": 0
+      },
+      "quality_score": {
+        "functionality_score": 95,
+        "readability_score": 100,
+        "maintainability_score": 100,
+        "efficiency_score": 100,
+        "style_score": 100,
+        "overall_score": 98.8,
+        "grade": "A"
+      },
+      "style_issues": [],
+      "strengths": [
+        "Excellent overall code quality",
+        "Good code complexity - easy to understand and maintain",
+        "Functions are well-sized and focused",
+        "Follows style guidelines consistently"
+      ],
+      "weaknesses": [
+        "Insufficient code documentation and comments"
+      ],
+      "suggestions": [
+        "\ud83d\udcdd Add docstrings to all functions and classes",
+        "\ud83d\udcdd Include inline comments for complex logic",
+        "\u2705 Run a linter (pylint, flake8) to catch style issues automatically",
+        "\ud83e\uddea Add unit tests to verify functionality",
+        "\ud83d\udcda Consider adding type hints for better code clarity"
+      ],
+      "best_practices_violations": [],
+      "security_concerns": [],
+      "ai_feedback": null,
+      "file_name": "bubble_sort.py",
+      "file_id": "f2bf47cc-06a6-4f22-ae82-76f2f8a6c222"
+    }
+  ],
+  "analysis_timestamp": "2025-10-25T22:38:33.112538"
+}

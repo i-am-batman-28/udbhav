@@ -1,0 +1,43 @@
+{
+  "submission_id": "9b908252-ce85-40c7-bd37-b41859de26fd",
+  "student_id": "nkjlk",
+  "student_name": "lklkn",
+  "student_email": "lnln",
+  "submission_type": "code",
+  "status": "submitted",
+  "metadata": {
+    "title": "Ann",
+    "description": null,
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [],
+    "programming_languages": [],
+    "total_files": 2,
+    "total_size": 1674
+  },
+  "files": [
+    {
+      "file_id": "5471b371-0e93-42cf-81ef-1eafc5e8c00a",
+      "original_name": "a.txt",
+      "saved_name": "5471b371-0e93-42cf-81ef-1eafc5e8c00a.txt",
+      "file_path": "submissions/9b908252-ce85-40c7-bd37-b41859de26fd/5471b371-0e93-42cf-81ef-1eafc5e8c00a.txt",
+      "file_size": 837,
+      "file_type": "text/plain",
+      "language": null,
+      "uploaded_at": "2025-10-25T23:14:56.197714"
+    },
+    {
+      "file_id": "094a1dc3-0ce6-4578-b6bd-9f0030ae73c6",
+      "original_name": "a.txt",
+      "saved_name": "094a1dc3-0ce6-4578-b6bd-9f0030ae73c6.txt",
+      "file_path": "submissions/9b908252-ce85-40c7-bd37-b41859de26fd/094a1dc3-0ce6-4578-b6bd-9f0030ae73c6.txt",
+      "file_size": 837,
+      "file_type": "text/plain",
+      "language": null,
+      "uploaded_at": "2025-10-25T23:14:56.197923"
+    }
+  ],
+  "submitted_at": "2025-10-25T23:14:56.197928",
+  "updated_at": "2025-10-25T23:14:56.231351",
+  "plagiarism_report_id": "ebee5fab-d8d8-4b4b-871e-a72be566f6cd"
+}

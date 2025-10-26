@@ -1,0 +1,26 @@
+{
+  "submission_id": "fc48f033-05d4-42fa-a189-2be74ace775b",
+  "student_name": "lkjlkjl",
+  "submission_type": "code",
+  "overall_originality_score": 50.0,
+  "total_matches_found": 1,
+  "similarity_matches": [
+    {
+      "submission_id": "ai_generated",
+      "student_name": "AI Tool (ChatGPT/Copilot/Claude)",
+      "similarity_percentage": 50.0,
+      "matching_sections": [],
+      "match_type": "ai_generated",
+      "confidence": 0.5,
+      "flagged": false
+    }
+  ],
+  "flagged_sections": [],
+  "risk_level": "high",
+  "recommendations": [
+    "\ud83d\udea8 High similarity detected. Manual review strongly recommended.",
+    "\ud83d\udcbb For code: Ensure you're not copying implementation details. Similar algorithms are acceptable if independently implemented."
+  ],
+  "analysis_timestamp": "2025-10-25T23:55:29.356493",
+  "sources_checked": 1
+}

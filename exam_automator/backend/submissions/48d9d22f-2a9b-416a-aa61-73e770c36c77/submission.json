@@ -1,0 +1,32 @@
+{
+  "submission_id": "48d9d22f-2a9b-416a-aa61-73e770c36c77",
+  "student_id": "nfs",
+  "student_name": "fhnsfh",
+  "student_email": "fns",
+  "submission_type": "code",
+  "status": "submitted",
+  "metadata": {
+    "title": "fns",
+    "description": null,
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [],
+    "programming_languages": [],
+    "total_files": 1,
+    "total_size": 837
+  },
+  "files": [
+    {
+      "file_id": "30149f88-725e-4e85-b709-2736640ce1b0",
+      "original_name": "a.txt",
+      "saved_name": "30149f88-725e-4e85-b709-2736640ce1b0.txt",
+      "file_path": "submissions/48d9d22f-2a9b-416a-aa61-73e770c36c77/30149f88-725e-4e85-b709-2736640ce1b0.txt",
+      "file_size": 837,
+      "file_type": "text/plain",
+      "language": null,
+      "uploaded_at": "2025-10-25T23:09:36.194780"
+    }
+  ],
+  "submitted_at": "2025-10-25T23:09:36.194795",
+  "updated_at": "2025-10-25T23:09:36.194796"
+}

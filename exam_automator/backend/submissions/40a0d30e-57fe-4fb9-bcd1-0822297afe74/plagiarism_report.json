@@ -1,0 +1,16 @@
+{
+  "submission_id": "40a0d30e-57fe-4fb9-bcd1-0822297afe74",
+  "student_name": "lkmlm",
+  "submission_type": "code",
+  "overall_originality_score": 100.0,
+  "total_matches_found": 0,
+  "similarity_matches": [],
+  "flagged_sections": [],
+  "risk_level": "low",
+  "recommendations": [
+    "\u2705 Excellent originality! Content appears to be highly original.",
+    "\ud83d\udcbb For code: Ensure you're not copying implementation details. Similar algorithms are acceptable if independently implemented."
+  ],
+  "analysis_timestamp": "2025-10-25T22:56:59.400206",
+  "sources_checked": 0
+}

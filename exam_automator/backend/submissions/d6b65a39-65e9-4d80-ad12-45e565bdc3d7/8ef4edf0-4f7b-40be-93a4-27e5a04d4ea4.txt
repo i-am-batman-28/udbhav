@@ -1,0 +1,31 @@
+# Simple Fibonacci calculator with logging - written manually
+import time
+
+def fib(n):
+    """Return nth Fibonacci number (basic recursion)."""
+    if n <= 1:
+        return n
+    return fib(n-1) + fib(n-2)
+
+def main():
+    print("Fibonacci Generator")
+    num = int(input("Enter how many terms: "))
+
+    start = time.time()
+    results = []
+
+    for i in range(num):
+        results.append(fib(i))
+    
+    duration = round(time.time() - start, 3)
+    print(f"Generated {num} terms in {duration}s")
+
+    # Save to file
+    with open("fib_output.txt", "w") as f:
+        for val in results:
+            f.write(str(val) + "\n")
+
+    print("Results saved to fib_output.txt")
+
+if __name__ == "__main__":
+    main()

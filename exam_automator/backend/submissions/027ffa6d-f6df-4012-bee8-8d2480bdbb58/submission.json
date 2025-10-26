@@ -1,0 +1,32 @@
+{
+  "submission_id": "027ffa6d-f6df-4012-bee8-8d2480bdbb58",
+  "student_id": "dgbsd",
+  "student_name": "fsg",
+  "student_email": "bs",
+  "submission_type": "code",
+  "status": "submitted",
+  "metadata": {
+    "title": "gas",
+    "description": null,
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [],
+    "programming_languages": [],
+    "total_files": 1,
+    "total_size": 837
+  },
+  "files": [
+    {
+      "file_id": "3a8d5025-3e2e-42e6-aad1-1887eb92b5ec",
+      "original_name": "a.txt",
+      "saved_name": "3a8d5025-3e2e-42e6-aad1-1887eb92b5ec.txt",
+      "file_path": "submissions/027ffa6d-f6df-4012-bee8-8d2480bdbb58/3a8d5025-3e2e-42e6-aad1-1887eb92b5ec.txt",
+      "file_size": 837,
+      "file_type": "text/plain",
+      "language": null,
+      "uploaded_at": "2025-10-25T23:04:43.682622"
+    }
+  ],
+  "submitted_at": "2025-10-25T23:04:43.682655",
+  "updated_at": "2025-10-25T23:04:43.682657"
+}

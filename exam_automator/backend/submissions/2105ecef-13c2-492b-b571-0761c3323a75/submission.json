@@ -1,0 +1,40 @@
+{
+  "submission_id": "2105ecef-13c2-492b-b571-0761c3323a75",
+  "student_id": "test-student-001",
+  "student_name": "Test Student",
+  "student_email": "test@example.com",
+  "submission_type": "code",
+  "status": "submitted",
+  "metadata": {
+    "title": "Bubble Sort Implementation",
+    "description": "Implementation of bubble sort algorithm in Python",
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [
+      "sorting",
+      "algorithm",
+      "python"
+    ],
+    "programming_languages": [
+      "python"
+    ],
+    "total_files": 1,
+    "total_size": 478
+  },
+  "files": [
+    {
+      "file_id": "cb7f08c5-5376-4418-9946-5e3ffc1bb21b",
+      "original_name": "bubble_sort.py",
+      "saved_name": "cb7f08c5-5376-4418-9946-5e3ffc1bb21b.py",
+      "file_path": "submissions/2105ecef-13c2-492b-b571-0761c3323a75/cb7f08c5-5376-4418-9946-5e3ffc1bb21b.py",
+      "file_size": 478,
+      "file_type": "text/plain",
+      "language": "python",
+      "uploaded_at": "2025-10-25T22:37:45.424125"
+    }
+  ],
+  "submitted_at": "2025-10-25T22:37:45.424154",
+  "updated_at": "2025-10-25T22:38:01.014175",
+  "code_analysis_id": "96977d4f-d68f-4603-a46a-fd7d01d910ef",
+  "plagiarism_report_id": "ae80e8a9-a9ae-42f1-b9ef-51a3debffb23"
+}

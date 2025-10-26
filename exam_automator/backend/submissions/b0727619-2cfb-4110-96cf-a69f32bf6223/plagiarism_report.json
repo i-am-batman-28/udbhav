@@ -1,0 +1,16 @@
+{
+  "submission_id": "b0727619-2cfb-4110-96cf-a69f32bf6223",
+  "student_name": "mnn",
+  "submission_type": "code",
+  "overall_originality_score": 100.0,
+  "total_matches_found": 0,
+  "similarity_matches": [],
+  "flagged_sections": [],
+  "risk_level": "low",
+  "recommendations": [
+    "\u2705 **Excellent Originality**: Content demonstrates strong original work with minimal issues.",
+    "\n**\ud83d\udcbb Code Submission Guidelines**:\n   \u2022 Similar algorithms are acceptable if independently implemented\n   \u2022 Code should show understanding through comments and variable names\n   \u2022 Avoid copying implementation details from online sources\n   \u2022 Document any external libraries or frameworks used"
+  ],
+  "analysis_timestamp": "2025-10-26T09:41:44.937534",
+  "sources_checked": 1
+}

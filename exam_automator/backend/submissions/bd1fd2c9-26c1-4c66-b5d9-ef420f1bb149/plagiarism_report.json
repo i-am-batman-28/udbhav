@@ -1,0 +1,41 @@
+{
+  "submission_id": "bd1fd2c9-26c1-4c66-b5d9-ef420f1bb149",
+  "student_name": "lknlknkln",
+  "submission_type": "code",
+  "overall_originality_score": 10.0,
+  "total_matches_found": 1,
+  "similarity_matches": [
+    {
+      "submission_id": "ai_generated",
+      "student_name": "AI Tool (ChatGPT/Copilot/Claude)",
+      "similarity_percentage": 90.0,
+      "matching_sections": [
+        {
+          "source_text": "Quick triage: ai_generated",
+          "target_text": "AI pattern detected",
+          "similarity": "0.9"
+        }
+      ],
+      "match_type": "ai_generated",
+      "confidence": 0.9,
+      "flagged": true
+    }
+  ],
+  "flagged_sections": [
+    {
+      "source_submission": "AI_Tool",
+      "text": "High confidence determination from initial analysis",
+      "similarity": 90.0,
+      "type": "ai_generated"
+    }
+  ],
+  "risk_level": "critical",
+  "recommendations": [
+    "\ufffd **High Risk**: Substantial plagiarism indicators. Immediate investigation needed.",
+    "\n**\ud83e\udd16 AI-Generated Content** (1 high-confidence detections):\n   \u2022 Review files: ai_generated\n   \u2022 Evidence includes: Over-commenting, perfect formatting, generic naming patterns\n   \u2022 **Action**: Interview student about code development process\n   \u2022 **Action**: Request Git commit history or development artifacts",
+    "\n**\ud83d\udcbb Code Submission Guidelines**:\n   \u2022 Similar algorithms are acceptable if independently implemented\n   \u2022 Code should show understanding through comments and variable names\n   \u2022 Avoid copying implementation details from online sources\n   \u2022 Document any external libraries or frameworks used",
+    "\n**\ud83c\udfaf Recommended Next Steps**:\n   1. Schedule meeting with student to discuss findings\n   2. Request original drafts, notes, or development history\n   3. Ask student to explain key concepts/code sections\n   4. Consider re-submission opportunity with proper citations\n   5. Document findings and meeting outcomes for records"
+  ],
+  "analysis_timestamp": "2025-10-26T01:04:08.738862",
+  "sources_checked": 1
+}
