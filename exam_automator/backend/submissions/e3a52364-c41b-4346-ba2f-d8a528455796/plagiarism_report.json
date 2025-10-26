@@ -1,0 +1,38 @@
+{
+  "submission_id": "e3a52364-c41b-4346-ba2f-d8a528455796",
+  "student_name": "Karthik",
+  "submission_type": "code",
+  "overall_originality_score": 10.0,
+  "total_matches_found": 1,
+  "similarity_matches": [
+    {
+      "submission_id": "ai_generated",
+      "student_name": "AI Tool (ChatGPT/Copilot/Claude)",
+      "similarity_percentage": 90.0,
+      "matching_sections": [
+        {
+          "source_text": "Quick triage: ai_generated",
+          "target_text": "AI pattern detected",
+          "similarity": "0.9"
+        }
+      ],
+      "match_type": "ai_generated",
+      "confidence": 0.9,
+      "flagged": true
+    }
+  ],
+  "flagged_sections": [
+    {
+      "source_submission": "AI_Tool",
+      "text": "High confidence determination from initial analysis",
+      "similarity": 90.0,
+      "type": "ai_generated"
+    }
+  ],
+  "risk_level": "critical",
+  "recommendations": [
+    "**ASSESSMENT: HIGH RISK**\nSubstantial plagiarism indicators detected. Immediate investigation recommended.\n\n**AI-GENERATED CONTENT DETECTED**: 1 detection(s)\n\n**Note**: Enhanced recommendations temporarily unavailable. Please review findings manually.\n"
+  ],
+  "analysis_timestamp": "2025-10-26T16:18:08.422944",
+  "sources_checked": 1
+}

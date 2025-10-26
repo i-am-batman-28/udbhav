@@ -1,0 +1,38 @@
+{
+  "submission_id": "6bec9d68-7cb5-4010-8c67-34ff684bebc1",
+  "student_name": "Karthik",
+  "submission_type": "code",
+  "overall_originality_score": 10.0,
+  "total_matches_found": 1,
+  "similarity_matches": [
+    {
+      "submission_id": "ai_generated",
+      "student_name": "AI Tool (ChatGPT/Copilot/Claude)",
+      "similarity_percentage": 90.0,
+      "matching_sections": [
+        {
+          "source_text": "Quick triage: ai_generated",
+          "target_text": "AI pattern detected",
+          "similarity": "0.9"
+        }
+      ],
+      "match_type": "ai_generated",
+      "confidence": 0.9,
+      "flagged": true
+    }
+  ],
+  "flagged_sections": [
+    {
+      "source_submission": "AI_Tool",
+      "text": "High confidence determination from initial analysis",
+      "similarity": 90.0,
+      "type": "ai_generated"
+    }
+  ],
+  "risk_level": "critical",
+  "recommendations": [
+    "### ASSESSMENT\nThe originality score of 10.0% indicates a CRITICAL level of concern regarding the academic integrity of the submission. This suggests that the majority of the content is not original and may have been generated or copied from another source.\n\n### DETAILED FINDINGS\nThe plagiarism detection results reveal the following:\n- **AI-Generated Content**: The detection of AI-generated content with a confidence level of 90.0% in the file \"ai_generated\" is a significant finding. This means that the algorithm is highly confident that the content in this file was generated using artificial intelligence tools rather than being written by the student. In the context of a coding assignment, this could imply that the student used AI tools to generate code instead of writing it themselves. The high confidence level and the nature of the detection suggest a severe breach of academic integrity.\n\n### REQUIRED ACTIONS\n1. Review the assignment guidelines and the course syllabus to ensure that they clearly communicate the expectations regarding original work and the use of AI-generated content.\n2. Investigate the \"ai_generated\" file further to understand the extent of the AI-generated content and its relevance to the assignment.\n3. Meet with the student to discuss the findings, understand their perspective, and clarify the university's policies on academic integrity and the use of AI tools in assignments.\n4. Consider requesting the student to resubmit the assignment, ensuring that it is entirely their original work, or to provide evidence that they have understood and can apply the concepts without relying on AI-generated content.\n\n### BEST PRACTICES\n1. **Clear Guidelines**: Ensure that all assignment guidelines explicitly state what constitutes original work and the acceptable use of external resources, including AI tools.\n2. **Educate on AI Use**: Provide students with guidance on how to appropriately use AI tools in their academic work, emphasizing the importance of original thought and contribution.\n3. **Originality in Coding**: For coding assignments, encourage students to focus on the logic, algorithm design, and problem-solving aspects, where originality can be more readily assessed.\n4. **Feedback and Support**: Offer regular feedback and support to students to help them understand and meet the expectations for original work, especially in subjects where the use of AI tools might be tempting or seemingly beneficial.\n\n### RECOMMENDED NEXT STEPS\nGiven the critical nature of the originality score, the following steps are recommended:\n1. **Document the Findings**: Record the plagiarism detection results and the actions taken, including any discussions with the student.\n2. **Meet with the Student**: Hold a meeting with the student to discuss the findings, the implications, and the expectations for original work.\n3. **Determine the Course of Action**: Based on the discussion and the student's response, decide on the appropriate action, which could range from requesting a resubmission to referring the case to the academic integrity committee.\n4. **Follow Institutional Policies**: Ensure that all actions taken are in accordance with the institution's policies on academic integrity, plagiarism, and the use of AI-generated content.\n5. **Reflect and Adjust**: After resolving the current issue, reflect on the experience to identify any necessary adjustments to assignment design, guidelines, or instructional strategies to prevent similar incidents in the future."
+  ],
+  "analysis_timestamp": "2025-10-26T16:04:27.252061",
+  "sources_checked": 1
+}

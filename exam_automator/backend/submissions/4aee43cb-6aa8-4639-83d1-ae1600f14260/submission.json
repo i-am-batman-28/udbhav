@@ -1,0 +1,43 @@
+{
+  "submission_id": "4aee43cb-6aa8-4639-83d1-ae1600f14260",
+  "student_id": "S2O23",
+  "student_name": "Karthik",
+  "student_email": "karthikmsarma@gmail.com",
+  "submission_type": "code",
+  "status": "submitted",
+  "metadata": {
+    "title": "ojlklkkj",
+    "description": null,
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [],
+    "programming_languages": [],
+    "total_files": 2,
+    "total_size": 1205
+  },
+  "files": [
+    {
+      "file_id": "a3c16e89-3eef-4c84-9755-be00c717ce41",
+      "original_name": "1.js",
+      "saved_name": "a3c16e89-3eef-4c84-9755-be00c717ce41.js",
+      "file_path": "submissions/4aee43cb-6aa8-4639-83d1-ae1600f14260/a3c16e89-3eef-4c84-9755-be00c717ce41.js",
+      "file_size": 413,
+      "file_type": "application/x-javascript",
+      "language": "javascript",
+      "uploaded_at": "2025-10-26T15:57:31.039728"
+    },
+    {
+      "file_id": "459741a3-0b99-48ef-afba-ba98828f96ec",
+      "original_name": "2.js",
+      "saved_name": "459741a3-0b99-48ef-afba-ba98828f96ec.js",
+      "file_path": "submissions/4aee43cb-6aa8-4639-83d1-ae1600f14260/459741a3-0b99-48ef-afba-ba98828f96ec.js",
+      "file_size": 792,
+      "file_type": "application/x-javascript",
+      "language": "javascript",
+      "uploaded_at": "2025-10-26T15:57:31.039974"
+    }
+  ],
+  "submitted_at": "2025-10-26T15:57:31.039979",
+  "updated_at": "2025-10-26T15:57:36.149204",
+  "plagiarism_report_id": "b1ee8a7d-b4ad-42a0-8a57-b6ba22c720a4"
+}

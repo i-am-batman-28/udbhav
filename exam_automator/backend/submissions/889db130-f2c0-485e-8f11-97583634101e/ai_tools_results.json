@@ -1,0 +1,16 @@
+{
+  "plagiarism": {
+    "success": true,
+    "overall_originality_score": 100.0,
+    "total_matches_found": 0,
+    "similarity_matches": [],
+    "flagged_sections": [],
+    "risk_level": "low",
+    "recommendations": [
+      ": EXCELLENT ORIGINALITY Content demonstrates strong original work with minimal integrity concerns.",
+      "Note: Enhanced recommendations temporarily unavailable.",
+      "Please review findings manually."
+    ],
+    "sources_checked": 1
+  }
+}

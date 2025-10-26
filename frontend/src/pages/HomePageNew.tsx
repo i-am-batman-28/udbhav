@@ -64,7 +64,7 @@ const HomePageNew: React.FC = () => {
           gutterBottom
           sx={{ fontWeight: 700, color: 'primary.main' }}
         >
-          ProctorIQ - Peer Review Platform
+          ProctorIQ 
         </Typography>
         <Typography
           variant="h5"

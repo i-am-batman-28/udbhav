@@ -1,0 +1,17 @@
+{
+  "plagiarism": {
+    "success": true,
+    "overall_originality_score": 10.0,
+    "total_matches_found": 0,
+    "similarity_matches": [],
+    "flagged_sections": [],
+    "risk_level": "high",
+    "recommendations": [
+      "High confidence determination from initial analysis",
+      "Originality Score: 10.0%",
+      "AI Confidence: 90.0%"
+    ],
+    "sources_checked": 0,
+    "note": "Full plagiarism check unavailable. Showing AI detection results only."
+  }
+}

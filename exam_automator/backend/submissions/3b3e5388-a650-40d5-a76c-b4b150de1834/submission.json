@@ -1,0 +1,32 @@
+{
+  "submission_id": "3b3e5388-a650-40d5-a76c-b4b150de1834",
+  "student_id": "S2O23",
+  "student_name": "Karthik",
+  "student_email": "karthikmsarma@gmail.com",
+  "submission_type": "code",
+  "status": "submitted",
+  "metadata": {
+    "title": "k;jlhlkjk",
+    "description": null,
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [],
+    "programming_languages": [],
+    "total_files": 1,
+    "total_size": 1926
+  },
+  "files": [
+    {
+      "file_id": "1d169af3-f13b-4038-ad3f-18823f121479",
+      "original_name": "a.txt",
+      "saved_name": "1d169af3-f13b-4038-ad3f-18823f121479.txt",
+      "file_path": "submissions/3b3e5388-a650-40d5-a76c-b4b150de1834/1d169af3-f13b-4038-ad3f-18823f121479.txt",
+      "file_size": 1926,
+      "file_type": "text/plain",
+      "language": null,
+      "uploaded_at": "2025-10-26T15:37:31.468117"
+    }
+  ],
+  "submitted_at": "2025-10-26T15:37:31.468140",
+  "updated_at": "2025-10-26T15:37:31.468142"
+}

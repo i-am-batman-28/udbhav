@@ -1,0 +1,41 @@
+{
+  "submission_id": "94fe4015-b111-40be-9f26-1efd5ad2f6c6",
+  "student_name": "Karthik",
+  "submission_type": "code",
+  "overall_originality_score": 0,
+  "total_matches_found": 1,
+  "similarity_matches": [
+    {
+      "submission_id": "ai_generated",
+      "student_name": "AI Tool (ChatGPT/Copilot/Claude)",
+      "similarity_percentage": 100.0,
+      "matching_sections": [
+        {
+          "source_text": "CRITICAL: PDF file extraction not available, potential indicator of AI-generated content o",
+          "target_text": "AI pattern detected",
+          "similarity": "1.0"
+        }
+      ],
+      "match_type": "ai_generated",
+      "confidence": 1.0,
+      "flagged": true
+    }
+  ],
+  "flagged_sections": [
+    {
+      "source_submission": "AI_Tool",
+      "text": "The provided content lacks sufficient information for a comprehensive analysis, but the absence of available PDF file extraction raises suspicions of AI-generated content or copy-paste, warranting further investigation",
+      "similarity": 100.0,
+      "type": "ai_generated"
+    }
+  ],
+  "risk_level": "critical",
+  "recommendations": [
+    "\ufffd **ASSESSMENT: HIGH RISK** - Substantial plagiarism indicators detected. Immediate investigation recommended.",
+    "\n**AI-GENERATED CONTENT DETECTED** (1 high-confidence detections):\n   \u2022 Review files: ai_generated\n   \u2022 Evidence includes: Over-commenting, perfect formatting, generic naming patterns\n   \u2022 **Action**: Interview student about code development process\n   \u2022 **Action**: Request Git commit history or development artifacts",
+    "\n**CODE SUBMISSION BEST PRACTICES**:\n   \u2022 Similar algorithms are acceptable if independently implemented\n   \u2022 Code should show understanding through comments and variable names\n   \u2022 Avoid copying implementation details from online sources\n   \u2022 Document any external libraries or frameworks used",
+    "\n**RECOMMENDED NEXT STEPS**:\n   1. Schedule meeting with student to discuss findings\n   2. Request original drafts, notes, or development history\n   3. Ask student to explain key concepts/code sections\n   4. Consider re-submission opportunity with proper citations\n   5. Document findings and meeting outcomes for records"
+  ],
+  "analysis_timestamp": "2025-10-26T12:35:28.648813",
+  "sources_checked": 1
+}

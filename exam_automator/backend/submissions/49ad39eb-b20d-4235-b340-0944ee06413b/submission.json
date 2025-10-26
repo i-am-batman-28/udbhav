@@ -1,0 +1,33 @@
+{
+  "submission_id": "49ad39eb-b20d-4235-b340-0944ee06413b",
+  "student_id": "S2O23",
+  "student_name": "Karthik",
+  "student_email": "karthikmsarma@gmail.com",
+  "submission_type": "writeup",
+  "status": "submitted",
+  "metadata": {
+    "title": "sfvas",
+    "description": null,
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [],
+    "programming_languages": [],
+    "total_files": 1,
+    "total_size": 1690415
+  },
+  "files": [
+    {
+      "file_id": "40d7d606-1b0c-4ace-a534-e222a1b8c942",
+      "original_name": "A2_S20230030385.pdf",
+      "saved_name": "40d7d606-1b0c-4ace-a534-e222a1b8c942.pdf",
+      "file_path": "submissions/49ad39eb-b20d-4235-b340-0944ee06413b/40d7d606-1b0c-4ace-a534-e222a1b8c942.pdf",
+      "file_size": 1690415,
+      "file_type": "application/pdf",
+      "language": null,
+      "uploaded_at": "2025-10-26T12:33:37.947501"
+    }
+  ],
+  "submitted_at": "2025-10-26T12:33:37.947522",
+  "updated_at": "2025-10-26T12:33:37.976198",
+  "plagiarism_report_id": "cdb31660-e6b8-4070-a950-d56b88a08873"
+}

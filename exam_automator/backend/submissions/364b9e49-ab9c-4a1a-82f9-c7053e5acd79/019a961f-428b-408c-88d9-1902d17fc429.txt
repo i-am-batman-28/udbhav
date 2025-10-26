@@ -1,0 +1,9 @@
+This investigation undertakes a comprehensive examination of the impact of four pivotal hyperparameters - momentum, iteration count, learning rate, and validation fraction - on the efficacy of a Multi-Layer Perceptron (MLP) neural network, with a specific focus on the MNIST dataset. The optimization of these parameters is crucial for achieving enhanced model performance, yet their effects on training efficiency, accuracy, and generalizability have not been thoroughly investigated. A series of rigorously controlled experiments is conducted to assess their influence on model performance, with particular emphasis on training accuracy, validation accuracy, loss, and training duration. The findings suggest that optimal performance and training efficiency are attained with momentum values of 0.9, a learning rate of 0.01, 50 iterations, and a validation fraction of either 0.05 or 0.1.
+
+Neural networks are potent instruments for pattern recognition and classification tasks, but their performance is intimately tied to the judicious selection of hyperparameters, which directly impact the model's capacity for rapid convergence, effective generalization, and overfitting prevention. Among the key hyperparameters, momentum, learning rate, iteration count, and validation fraction play pivotal roles in optimizing neural network training. Notwithstanding the importance of these parameters, a comprehensive study that systematically explores their effects on model performance within the context of the MNIST dataset has been lacking.
+
+The primary objectives of this study are to: 
+• Investigate the consequences of varying momentum values on model convergence and generalizability.
+• Examine the impact of iteration count on training duration and accuracy.
+• Explore the influence of learning rate adjustments on model stability and performance.
+• Analyze the function of the validation fraction in optimizing neural network training.

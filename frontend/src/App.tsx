@@ -1,15 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline, Box } from '@mui/material';
 
+// Context
+import { AuthProvider } from './context/AuthContext';
+
 // Components
 import Navbar from './components/Navbar';
+import ProtectedRoute from './components/ProtectedRoute';
+import CookieConsent from './components/CookieConsent';
 import HomePage from './pages/HomePageNew';
 import UploadPage from './pages/UploadPage';
 import BatchUploadPage from './pages/BatchUploadPage';
 import ResultsPage from './pages/ResultsPageNew';
+import AIToolsResultsPage from './pages/AIToolsResultsPage';
 import HistoryPage from './pages/HistoryPageNew';
+
+// Auth Pages
+import Login from './pages/Login';
+import Register from './pages/Register';
+import StudentDashboard from './pages/StudentDashboard';
+import TeacherDashboard from './pages/TeacherDashboard';
 
 // Theme configuration
 const theme = createTheme({
@@ -60,18 +72,87 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-          <Navbar />
-          <Box component="main" sx={{ flexGrow: 1, pt: 2 }}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/upload" element={<UploadPage />} />
-              <Route path="/batch-upload" element={<BatchUploadPage />} />
-              <Route path="/results/:uploadId" element={<ResultsPage />} />
-              <Route path="/history" element={<HistoryPage />} />
-            </Routes>
+        <AuthProvider>
+          <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            <Navbar />
+            <Box component="main" sx={{ flexGrow: 1, pt: 2 }}>
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+
+                {/* Protected Routes - Student */}
+                <Route
+                  path="/student-dashboard"
+                  element={
+                    <ProtectedRoute requiredRole="student">
+                      <StudentDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* Protected Routes - Teacher */}
+                <Route
+                  path="/teacher-dashboard"
+                  element={
+                    <ProtectedRoute requiredRole="teacher">
+                      <TeacherDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* Protected Routes - All authenticated users */}
+                <Route
+                  path="/upload"
+                  element={
+                    <ProtectedRoute>
+                      <UploadPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/batch-upload"
+                  element={
+                    <ProtectedRoute requiredRole="teacher">
+                      <BatchUploadPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/results/:uploadId"
+                  element={
+                    <ProtectedRoute>
+                      <AIToolsResultsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/evaluation/:uploadId"
+                  element={
+                    <ProtectedRoute>
+                      <ResultsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/history"
+                  element={
+                    <ProtectedRoute>
+                      <HistoryPage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* Catch all - redirect to home */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Box>
+            
+            {/* Cookie Consent Banner */}
+            <CookieConsent />
           </Box>
-        </Box>
+        </AuthProvider>
       </Router>
     </ThemeProvider>
   );

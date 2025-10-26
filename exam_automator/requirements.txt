@@ -1,21 +1,35 @@
 # Core ProctorIQ Dependencies
-# OpenAI for AI-powered evaluation and feedback
+# OpenAI for AI-powered evaluation and feedback (optional)
 openai>=1.0.0
+
+# Groq API - Fast inference (recommended)
+groq>=0.4.0
 
 # Environment variable management
 python-dotenv>=1.0.0
 
-# Vector Database (Pinecone with gRPC support) - for plagiarism detection
-pinecone-client[grpc]>=3.0.0
+# MongoDB - Database for users and submissions
+motor>=3.7.0  # Async MongoDB driver for FastAPI
+pymongo>=4.15.0
+
+# Authentication & Security
+bcrypt>=4.3.0  # Password hashing
+pyjwt>=2.10.0  # JWT tokens
+
+# Vector Database - Local FAISS (replaces Pinecone)
+faiss-cpu>=1.11.0  # Free local vector similarity search
+sentence-transformers>=4.1.0  # Embeddings
+
+# DEPRECATED: Pinecone (keeping for legacy support)
+# pinecone-client[grpc]>=3.0.0
 
 # LangChain for document processing and embeddings
 langchain>=0.1.0
 langchain-community>=0.0.1
-langchain-pinecone>=0.0.1
+# langchain-pinecone>=0.0.1  # DEPRECATED
 langchain-huggingface>=0.0.1
 
 # Embeddings and NLP
-sentence-transformers>=2.2.0
 transformers>=4.30.0
 spacy>=3.6.0
 nltk>=3.8.0

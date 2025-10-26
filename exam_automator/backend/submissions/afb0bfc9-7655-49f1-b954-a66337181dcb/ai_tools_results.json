@@ -1,0 +1,38 @@
+{
+  "humanizer": {
+    "success": true,
+    "original": "#include <stdio.h>\n#include <stdlib.h>\n#define ORDER 3\n\ntypedef struct BPlusNode {\n    int data[ORDER];\n    struct BPlusNode *child[ORDER + 1];\n    int leaf, count;\n    struct BPlusNode *next;\n} BPlusNode;\n\nBPlusNode *root = NULL;\n\nBPlusNode* createNode(int leaf) {\n    BPlusNode *n = malloc(sizeof(BPlusNode));\n    n->leaf = leaf;\n    n->count = 0;\n    n->next = NULL;\n    for (int i = 0; i <= ORDER; i++) n->child[i] = NULL;\n    return n;\n}\n\nvoid insertBplus(int val) {\n    if (!root) {\n        root = createNode(1);\n        root->data[0] = val;\n        root->count = 1;\n        return;\n    }\n    BPlusNode *t = root;\n    while (!t->leaf) {\n        int i;\n        for (i = 0; i < t->count; i++)\n            if (val < t->data[i]) break;\n        t = t->child[i];\n    }\n    t->data[t->count++] = val;\n}\n\nvoid display(BPlusNode *node, int level) {\n    if (node) {\n        printf(\"Level %d [\", level);\n        for (int i = 0; i < node->count; i++) printf(\" %d\", node->data[i]);\n        printf(\" ]\\n\");\n        if (!node->leaf)\n            for (int i = 0; i <= node->count; i++)\n                display(node->child[i], level + 1);\n    }\n}\n\nint main() {\n    int val, ch;\n    while (1) {\n        printf(\"\\n1.Insert  2.Display  3.Exit\\n\");\n        scanf(\"%d\", &ch);\n        if (ch == 1) {\n            scanf(\"%d\", &val);\n            insertBplus(val);\n            display(root, 0);\n        } else if (ch == 2) display(root, 0);\n        else break;\n    }\n    return 0;\n}\n",
+    "humanized": "Let's take a look at how we can implement a BPlus tree in C. We'll start by defining the structure for our tree nodes. \nWe define our BPlusNode with an array to hold the data, an array of child pointers, and a few other variables to keep track of whether it's a leaf node and how many items it's currently holding.\n```c\n#include <stdio.h>\n#include <stdlib.h>\n#define ORDER 3\n\ntypedef struct BPlusNode {\n    int data[ORDER];\n    struct BPlusNode *child[ORDER + 1];\n    int leaf, count;\n    struct BPlusNode *next;\n} BPlusNode;\n\nBPlusNode *root = NULL;\n```\nTo create a new node, we allocate some memory and initialize its values.\n```c\nBPlusNode* createNode(int leaf) {\n    BPlusNode *n = malloc(sizeof(BPlusNode));\n    n->leaf = leaf;\n    n->count = 0;\n    n->next = NULL;\n    for (int i = 0; i <= ORDER; i++) \n        n->child[i] = NULL;\n    return n;\n}\n```\nNow let's talk about inserting values into our tree. If the tree is empty, we create a new root node and add our value to it. Otherwise, we traverse the tree to find the right spot for our value.\n```c\nvoid insertBplus(int val) {\n    if (!root) {\n        root = createNode(1);\n        root->data[0] = val;\n        root->count = 1;\n        return;\n    }\n    BPlusNode *t = root;\n    while (!t->leaf) {\n        int i;\n        for (i = 0; i < t->count; i++)\n            if (val < t->data[i]) break;\n        t = t->child[i];\n    }\n    t->data[t->count++] = val;\n}\n```\nTo display our tree, we use a recursive function that prints out the values at each level.\n```c\nvoid display(BPlusNode *node, int level) {\n    if (node) {\n        printf(\"Level %d [\", level);\n        for (int i = 0; i < node->count; i++) \n            printf(\" %d\", node->data[i]);\n        printf(\" ]\\n\");\n        if (!node->leaf)\n            for (int i = 0; i <= node->count; i++)\n                display(node->child[i], level + 1);\n    }\n}\n```\nIn our main function, we've got a simple loop that lets us insert values, display the tree, or exit the program.\n```c\nint main() {\n    int val, ch;\n    while (1) {\n        printf(\"\\n1.Insert  2.Display  3.Exit\\n\");\n        scanf(\"%d\", &ch);\n        if (ch == 1) {\n            scanf(\"%d\", &val);\n            insertBplus(val);\n            display(root, 0);\n        } else if (ch == 2) \n            display(root, 0);\n        else \n            break;\n    }\n    return 0;\n}\n```",
+    "ai_score_before": 90.0,
+    "ai_score_after": 20.0,
+    "original_ai_score": 90.0,
+    "humanized_ai_score": 20.0,
+    "changes_made": [
+      "Replaced overly formal language with a more conversational tone",
+      "Simplified vocabulary where possible (e.g., \"let's talk about\" instead of \"it is important to note\")",
+      "Introduced contractions to make the text sound more natural",
+      "Removed some of the perfect grammar to make it sound less robotic",
+      "Added a personal voice to the text, making it sound like it was written by a real person"
+    ],
+    "tone_applied": "professional"
+  },
+  "plagiarism": {
+    "success": true,
+    "overall_originality_score": 100.0,
+    "total_matches_found": 0,
+    "similarity_matches": [],
+    "flagged_sections": [],
+    "risk_level": "low",
+    "recommendations": [
+      "The originality score of 100.0% indicates EXCELLENT ORIGINALITY, suggesting that the submission is entirely free of plagiarism and does not contain any significant similarity matches.",
+      "Given the originality score and the report, there are no categories with findings to break down.",
+      "The report explicitly states \"No significant similarity matches detected,\" which implies: - AI-Generated: There is no evidence to suggest that the submission was generated using artificial intelligence tools. - Internal Duplication: There are no instances of internal duplication, where parts of the submission are copied from other parts of the same submission. - Exact Matches: No exact matches were found, indicating that no parts of the submission are identical to external sources. - Paraphrasing: There is no indication of paraphrased content that could suggest plagiarism.",
+      "Since there are no findings, there are no specific examples to cite, and confidence levels and severity are not applicable in this context.",
+      "No further action is required regarding plagiarism detection for this submission.",
+      "Review the submission for content and understanding, ensuring that the student has met the learning objectives and requirements of the assignment.",
+      "Consider providing feedback on the quality of the work, clarity, and any areas where the student could improve, unrelated to plagiarism.",
+      "Regularly review and update assignments to ensure they are relevant and challenging, encouraging original thought and work."
+    ],
+    "sources_checked": 0
+  }
+}

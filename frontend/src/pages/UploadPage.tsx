@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import {
@@ -32,6 +32,8 @@ import {
 } from '@mui/icons-material';
 
 import { apiService } from '../services/api';
+import { useAuth } from '../context/AuthContext';
+import AIAssistancePanel from '../components/AIAssistancePanel';
 
 interface UploadedFile {
   file: File;
@@ -40,10 +42,8 @@ interface UploadedFile {
 
 const UploadPage: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
-  const [studentId, setStudentId] = useState('');
-  const [studentName, setStudentName] = useState('');
-  const [studentEmail, setStudentEmail] = useState('');
   const [submissionType, setSubmissionType] = useState<'code' | 'writeup' | 'mixed'>('code');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -53,6 +53,54 @@ const UploadPage: React.FC = () => {
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [selectedAITools, setSelectedAITools] = useState<string[]>([]);
+
+  // Detect file type for AI tools
+  const getFileTypeCategory = (): 'code' | 'text' | 'none' => {
+    if (uploadedFiles.length === 0) return 'none';
+    
+    const codeExtensions = ['.py', '.js', '.jsx', '.ts', '.tsx', '.java', '.cpp', '.c', '.h', '.cs', '.php', '.rb', '.go', '.rs', '.swift'];
+    const textExtensions = ['.pdf', '.doc', '.docx', '.txt', '.md', '.rtf'];
+    
+    const hasCode = uploadedFiles.some(f => 
+      codeExtensions.some(ext => f.file.name.toLowerCase().endsWith(ext))
+    );
+    
+    const hasText = uploadedFiles.some(f =>
+      textExtensions.some(ext => f.file.name.toLowerCase().endsWith(ext)) ||
+      f.file.type.includes('pdf') ||
+      f.file.type.includes('document')
+    );
+    
+    // If only code files, return 'code'
+    if (hasCode && !hasText) return 'code';
+    
+    // If has text/PDF files, return 'text' (all tools available)
+    if (hasText) return 'text';
+    
+    // Default to 'text' for mixed or unknown types
+    return hasCode ? 'code' : 'text';
+  };
+
+  const handleAIToolClick = (toolId: string) => {
+    // Toggle selection
+    setSelectedAITools(prev => {
+      if (prev.includes(toolId)) {
+        // Deselect if already selected
+        return prev.filter(id => id !== toolId);
+      } else {
+        // Add to selection
+        return [...prev, toolId];
+      }
+    });
+  };
+
+  // Auto-populate student information from logged-in user
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const newFiles = acceptedFiles.map((file) => ({
@@ -104,18 +152,12 @@ const UploadPage: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (!studentId.trim()) {
-      setError('Student ID is required');
+    if (!user) {
+      setError('You must be logged in to submit');
+      navigate('/login');
       return;
     }
-    if (!studentName.trim()) {
-      setError('Student name is required');
-      return;
-    }
-    if (!studentEmail.trim()) {
-      setError('Student email is required');
-      return;
-    }
+
     if (!title.trim()) {
       setError('Submission title is required');
       return;
@@ -130,12 +172,12 @@ const UploadPage: React.FC = () => {
     setSuccess(null);
 
     try {
-      // Upload files
+      // Upload files using logged-in user's information
       const uploadResponse = await apiService.uploadSubmission(
         uploadedFiles.map((f) => f.file),
-        studentId.trim(),
-        studentName.trim(),
-        studentEmail.trim(),
+        user.student_id || user.id, // Use student_id for students, user.id for teachers
+        user.name,
+        user.email,
         submissionType,
         title.trim(),
         description.trim(),
@@ -147,8 +189,8 @@ const UploadPage: React.FC = () => {
       setProcessing(true);
       setUploading(false); // Upload is complete, now processing
 
-      // Run analysis on the submission
-      await apiService.analyzeAll(uploadResponse.submission_id, false, 10);
+      // Run analysis on the submission with selected AI tools
+      await apiService.analyzeAll(uploadResponse.submission_id, false, 10, selectedAITools);
 
       setSuccess('Analysis completed successfully!');
       
@@ -165,7 +207,7 @@ const UploadPage: React.FC = () => {
     }
   };
 
-  const isFormValid = studentId.trim() && studentName.trim() && studentEmail.trim() && title.trim() && uploadedFiles.length > 0;
+  const isFormValid = user && title.trim() && uploadedFiles.length > 0;
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
@@ -199,53 +241,18 @@ const UploadPage: React.FC = () => {
         </Alert>
       )}
 
-      <Grid container spacing={4}>
-        {/* Student Information */}
-        <Grid item xs={12}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Student Information
-              </Typography>
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Student ID"
-                    value={studentId}
-                    onChange={(e) => setStudentId(e.target.value)}
-                    required
-                    disabled={uploading || processing}
-                    placeholder="e.g., STU123456"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Student Name"
-                    value={studentName}
-                    onChange={(e) => setStudentName(e.target.value)}
-                    required
-                    disabled={uploading || processing}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Email Address"
-                    type="email"
-                    value={studentEmail}
-                    onChange={(e) => setStudentEmail(e.target.value)}
-                    required
-                    disabled={uploading || processing}
-                    placeholder="student@university.edu"
-                  />
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-        </Grid>
+      {/* Show logged-in user info */}
+      {user && (
+        <Alert severity="info" sx={{ mb: 3 }}>
+          <Typography variant="body2">
+            <strong>Submitting as:</strong> {user.name} ({user.email})
+            {user.student_id && ` • ID: ${user.student_id}`}
+            {user.role === 'teacher' && ' • Teacher Account'}
+          </Typography>
+        </Alert>
+      )}
 
+      <Grid container spacing={4}>
         {/* Submission Details */}
         <Grid item xs={12}>
           <Card>
@@ -411,6 +418,18 @@ const UploadPage: React.FC = () => {
             </CardContent>
           </Card>
         </Grid>
+
+        {/* AI Assistance Panel - Shows after files are uploaded */}
+        {uploadedFiles.length > 0 && (
+          <Grid item xs={12}>
+            <AIAssistancePanel
+              fileType={getFileTypeCategory()}
+              disabled={uploading || processing}
+              selectedTools={selectedAITools}
+              onToolClick={handleAIToolClick}
+            />
+          </Grid>
+        )}
 
         {/* Submit Button */}
         <Grid item xs={12}>

@@ -1,0 +1,33 @@
+{
+  "submission_id": "e2c1c05a-bd55-4ba7-be31-1652d0c5e33d",
+  "student_id": "S2O23",
+  "student_name": "Karthik",
+  "student_email": "karthikmsarma@gmail.com",
+  "submission_type": "writeup",
+  "status": "submitted",
+  "metadata": {
+    "title": "jkhkjh",
+    "description": null,
+    "assignment_id": null,
+    "course_id": null,
+    "tags": [],
+    "programming_languages": [],
+    "total_files": 1,
+    "total_size": 1690415
+  },
+  "files": [
+    {
+      "file_id": "016668e4-7bf0-4bbe-a661-14e5f95bfbee",
+      "original_name": "A2_S20230030385.pdf",
+      "saved_name": "016668e4-7bf0-4bbe-a661-14e5f95bfbee.pdf",
+      "file_path": "submissions/e2c1c05a-bd55-4ba7-be31-1652d0c5e33d/016668e4-7bf0-4bbe-a661-14e5f95bfbee.pdf",
+      "file_size": 1690415,
+      "file_type": "application/pdf",
+      "language": null,
+      "uploaded_at": "2025-10-26T12:44:05.926264"
+    }
+  ],
+  "submitted_at": "2025-10-26T12:44:05.926289",
+  "updated_at": "2025-10-26T12:44:05.942555",
+  "plagiarism_report_id": "12e18d36-a698-4b9a-8041-fbed8654544c"
+}

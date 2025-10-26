@@ -3,12 +3,19 @@ ProctorIQ - Automated Exam Evaluation System
 FastAPI Backend with File Upload and Processing
 """
 
+# CRITICAL: Set environment variables BEFORE any imports that use TensorFlow/sentence-transformers
+import os
+os.environ['TF_NUM_INTEROP_THREADS'] = '1'
+os.environ['TF_NUM_INTRAOP_THREADS'] = '1'
+os.environ['OMP_NUM_THREADS'] = '1'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Suppress TensorFlow warnings
+os.environ['TOKENIZERS_PARALLELISM'] = 'false'  # Disable tokenizers parallelism warnings
+
 from fastapi import FastAPI, File, UploadFile, HTTPException, Depends, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from typing import List, Optional
-import os
 import shutil
 import uuid
 from pathlib import Path
@@ -17,31 +24,76 @@ from datetime import datetime
 
 from api.routes import router as api_router
 from api.peer_review_routes import router as peer_review_router
+from api.auth_routes import router as auth_router
+from api.ai_routes import router as ai_tools_router
 from config.settings import get_settings
 from services.vector_evaluator import VectorEnhancedEvaluator
 from ocr.extractor import OCRExtractor
+from db.mongodb import connect_to_mongo, close_mongo_connection, get_database
+from db.faiss_store import initialize_vector_store
+from middleware.auth_middleware import auth_middleware
 
 # Initialize FastAPI app
 app = FastAPI(
     title="ProctorIQ API - Peer Review Platform",
     description="AI-Driven Peer Review Platform with Plagiarism Detection and Code Analysis",
-    version="2.0.0",
+    version="3.0.0",
     docs_url="/docs",
     redoc_url="/redoc"
 )
 
-# Configure CORS
+
+@app.on_event("startup")
+async def startup_event():
+    """Initialize services on startup"""
+    print("🚀 Starting ProctorIQ API...")
+    
+    # Connect to MongoDB
+    await connect_to_mongo()
+    
+    # Initialize auth middleware with database
+    database = get_database()
+    auth_middleware.initialize(database)
+    
+    # Initialize FAISS vector store in background to avoid blocking
+    # FAISS will be lazy-loaded on first use
+    try:
+        print("⏳ FAISS vector store will be initialized on first use...")
+        # Don't block startup with FAISS initialization
+        # initialize_vector_store()
+    except Exception as e:
+        print(f"⚠️  FAISS initialization deferred: {e}")
+    
+    print("✅ All services initialized")
+
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Cleanup on shutdown"""
+    await close_mongo_connection()
+    print("👋 ProctorIQ API shutdown complete")
+
+# Configure CORS - MUST be before route includes
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],  # React dev server
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:3001",
+        "http://127.0.0.1:3001"
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=3600,  # Cache preflight requests for 1 hour
 )
 
 # Include API routes
+app.include_router(auth_router)  # Authentication routes
 app.include_router(api_router, prefix="/api/v1")  # Legacy exam evaluation routes
 app.include_router(peer_review_router, prefix="/api/v1")  # New peer review routes
+app.include_router(ai_tools_router)  # AI writing tools routes
 
 # Create upload directory if it doesn't exist
 UPLOAD_DIR = Path("uploads")
